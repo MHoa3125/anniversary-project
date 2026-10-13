@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a8d8f0">
+<title>Happy Anniversary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div>
+
+<section id="s1" class="is-visible">
+  <span class="heart-mark">❤</span>
+  <div class="card">
+    <div class="polas">
+      <div class="pola"><img class="ph" src="images/photo1.png" alt="Ảnh kỷ niệm 1" draggable="false" onerror="this.style.display='none'"></div>
+      <div class="pola b"><img class="ph" src="images/photo2.png" alt="Ảnh kỷ niệm 2" draggable="false" onerror="this.style.display='none'"></div>
+    </div>
+    <h1 class="hand">Happy<br>Anniversary!</h1>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="photo-frame-container card">
+    <div class="photo-top-right">
+      <img src="images/photo2.png" alt="Ảnh kỷ niệm nhỏ" draggable="false">
+    </div>
+    <div class="days-together-counter">
+      <p>Chuyến xe của miwa và tuni đã đi được:</p>
+      <p id="countdown"></p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <h2 class="title hand" style="text-align:center;">Lọ điều ước ✨</h2>
+  <div class="wrap">
+    <div class="jar-wrap" id="jar"><canvas id="jarCanvas" width="170" height="220"></canvas></div>
+    <div class="wish-side">
+      <div class="note" id="wishNote" aria-live="polite">Bấm vào lọ để mở một thông điệp yêu thương 💌</div>
+      <p class="hint">Bạn có thể bấm nhiều lần để xem những điều ước khác nhau</p>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <h2>YOU ARE THE BEST THING THAT'S EVER BEEN MINE</h2>
+</section>
+
+<section id="s6">
+  <h2 class="title hand">Dán ảnh kỷ niệm 🖇️</h2>
+  <div class="line-wrap">
+    <div class="rope r1"></div><div class="rope r2"></div>
+    <div class="peg slot-0"></div><div class="peg slot-1"></div>
+    <div class="peg slot-2"></div><div class="peg slot-3"></div>
+    <div class="dropzone slot-0" data-slot="0"></div>
+    <div class="dropzone slot-1" data-slot="1"></div>
+    <div class="dropzone slot-2" data-slot="2"></div>
+    <div class="dropzone slot-3" data-slot="3"></div>
+  </div>
+  <div class="box-wrap" id="box"><canvas id="boxCanvas" width="180" height="160"></canvas><span class="box-label">Bấm để mở hộp</span></div>
+  <div class="polaroids" id="polaroids"></div>
+</section>
+
+<section id="s7">
+  <h2 class="hand">The End. To be continued... 💞</h2>
+  <p>Happy Anniversary to Us!</p>
+  <div class="player" id="player">🎵</div>
+</section>
+<a href="../photobook/index.html" id="openPhotobookBtn">Mở Photobook</a>
+  <script src="js/script.js"></script>
+</body>
+</html>

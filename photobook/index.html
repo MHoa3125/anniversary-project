@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Photobook — Cuốn sổ kỷ niệm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- shared filter that gives every doodle stroke a slightly jittery, hand-drawn look -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="sketchy" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.09" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- reusable hand-drawn doodle shapes, referenced by <use> further down -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="doodle-sparkle"><path d="M12 1.5C12.9 8 14.2 9.8 21 11C14.2 12.2 12.9 14 12 20.5C11.1 14 9.8 12.2 3 11C9.8 9.8 11.1 8 12 1.5Z" fill="currentColor"/></g>
+    <g id="doodle-heart"><path d="M12.5 20.5C4 14.3 2 9.2 5.2 6C7.7 3.5 11.2 4.4 12.5 8C13.8 4.4 17.3 3.5 19.8 6C23 9.2 21 14.3 12.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+    <g id="doodle-flower">
+      <ellipse cx="12" cy="6" rx="3.2" ry="4.4" fill="currentColor" opacity=".85"/>
+      <ellipse cx="12" cy="6" rx="3.2" ry="4.4" fill="currentColor" opacity=".85" transform="rotate(72 12 12)"/>
+      <ellipse cx="12" cy="6" rx="3.2" ry="4.4" fill="currentColor" opacity=".85" transform="rotate(144 12 12)"/>
+      <ellipse cx="12" cy="6" rx="3.2" ry="4.4" fill="currentColor" opacity=".85" transform="rotate(216 12 12)"/>
+      <ellipse cx="12" cy="6" rx="3.2" ry="4.4" fill="currentColor" opacity=".85" transform="rotate(288 12 12)"/>
+      <circle cx="12" cy="12" r="2.4" fill="#fff8ea"/>
+    </g>
+    <g id="doodle-lavender">
+      <path d="M12 22 C12 16 12 10 12 3" fill="none" stroke="#5b6b3f" stroke-width="1.4" stroke-linecap="round"/>
+      <g fill="#8a7bb8">
+        <ellipse cx="12" cy="4" rx="1.6" ry="2.4"/><ellipse cx="9.6" cy="6.4" rx="1.5" ry="2.2" transform="rotate(-30 9.6 6.4)"/>
+        <ellipse cx="14.4" cy="6.4" rx="1.5" ry="2.2" transform="rotate(30 14.4 6.4)"/>
+        <ellipse cx="9" cy="9.6" rx="1.5" ry="2.2" transform="rotate(-30 9 9.6)"/>
+        <ellipse cx="15" cy="9.6" rx="1.5" ry="2.2" transform="rotate(30 15 9.6)"/>
+        <ellipse cx="8.6" cy="13" rx="1.5" ry="2.2" transform="rotate(-25 8.6 13)"/>
+        <ellipse cx="15.4" cy="13" rx="1.5" ry="2.2" transform="rotate(25 15.4 13)"/>
+      </g>
+    </g>
+    <g id="doodle-swirl"><path d="M2 12 C6 4 14 4 16 10 C17.6 15 12.6 18 9.4 15 C7.2 13 9 9.4 12.5 9.8 C15.4 10.1 16 13 14.4 14.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="doodle-cat"><path d="M4 20 C3 13 5 9 6.4 7.4L5.6 4l2.6 2.2C9.5 5.6 10.7 5.4 12 5.4s2.5.2 3.8.8L18.4 4l-.8 3.4C19 9 21 13 20 20c-2 1.6-5 2.4-8 2.4s-6-.8-8-2.4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9.6" cy="12.5" r=".9" fill="currentColor"/><circle cx="14.4" cy="12.5" r=".9" fill="currentColor"/><path d="M10.6 15c.6.6 2.2.6 2.8 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></g>
+    <g id="doodle-rose">
+      <path d="M12 21c0-5 0-11 0-16" stroke="#4b6b3f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M8.6 16.4c1.4-1 2.6-1 3.4 0M15.4 16.4c-1.4-1-2.6-1-3.4 0" stroke="#4b6b3f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M12 3c-3 .6-4.4 3-3.2 5 .8-1.6 2-2 3.2-1.6-1.6.6-2.2 2-1.4 3.4 1-1 2.2-1.2 3-.4-1 .4-1.6 1.4-1 2.6 2.4-.2 4-2 4-4.4C16.6 4.6 14.6 2.6 12 3Z" fill="#8a2f3d" stroke="#6b1f2b" stroke-width=".6"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="book-wrap">
+  <div class="book-controls">
+    <a href="../anniversary-project/index.html" class="nav-btn back-to-main">← Quay lại</a>
+    <span>photobook</span>
+    <span class="count"><span id="pageNo">1</span> / 5</span>
+  </div>
+  <div class="book wobble-effect" id="book">
+    <div class="click-area left-click-area"></div>
+    <div class="click-area right-click-area"></div>
+
+    <!-- PAGE 1 — cover -->
+    <div class="page" id="p1" style="z-index:105;">
+      <div class="page-face page-front cover">
+        <div class="grain"></div>
+        <div class="doodle sparkle" style="top:9%;right:11%;width:22px;height:22px;color:#efe4d3;"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
+        <div class="doodle sparkle" style="bottom:12%;left:9%;width:15px;height:15px;color:#efe4d3;animation-delay:1s;"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
+        <div class="doodle float" style="top:15%; left:15%; width:30px; height:30px; color:#e8b9be;"><svg viewBox="0 0 24 24"><use href="#doodle-flower"/></svg></div>
+        <div class="doodle" style="bottom:15%; right:15%; width:25px; height:25px; color:#ff8fa3;"><svg viewBox="0 0 24 24"><use href="#doodle-heart"/></svg></div>
+        <div class="doodle" style="top:5%; left:40%; width:40px; height:40px; color:#4a3527;"><svg viewBox="0 0 24 24"><use href="#doodle-cat"/></svg></div>
+        <div class="cover-card">
+          <div class="tape t1"></div>
+          <p class="cover-eyebrow">a love letter</p>
+          <h1 class="cover-title">Chúng mình</h1>
+          <p class="cover-sub"></p>
+          <div class="doodle sway" style="width:64px;height:64px;left:6%;bottom:-8%;color:#6b5240;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
+        </div>
+      </div>
+      <div class="page-face page-back"><span class="page-back-mark">✦</span></div>
+    </div>
+
+    <!-- PAGE 2 — our song / somewhere in the ordinary days -->
+    <div class="page" id="p2" style="z-index:104;">
+      <div class="page-face page-front spread">
+        <div class="grain"></div>
+        <div class="half left dark-bg">
+          <div class="vinyl float" style="width:56%;aspect-ratio:1;left:-8%;top:16%;"></div>
+          <div class="filmstrip" style="width:34%;aspect-ratio:1/2.5;top:6%;right:6%;">
+            <div class="perf top"><span></span><span></span><span></span><span></span></div>
+            <div class="frame"><img src="images/photo1.png" alt="Ảnh 1" onerror="this.style.display='none'"></div>
+            <div class="frame"><img src="images/photo2.jpg" alt="Ảnh 2" onerror="this.style.display='none'"></div>
+            <div class="frame"><img src="images/photo3.jpg" alt="Ảnh 3" onerror="this.style.display='none'"></div>
+            <div class="perf bot"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="photo tilt-1" style="width:34%;aspect-ratio:1/1.16;left:8%;bottom:6%;">
+            <span class="washi"></span><img src="images/photo4.jpg" alt="Ảnh 4" onerror="this.style.display='none'">
+          </div>
+          <p class="script" style="position:absolute;bottom:3%;left:44%;color:#efe4d3cc;font-size:1.2rem;">bài hát của chúng mình</p>
+        </div>
+        <div class="half right paper-bg">
+          <div class="doodle sparkle" style="top:6%;left:6%;width:16px;height:16px;color:var(--ink-soft);"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
+          <h2 class="page-title">may mắn làm sao</h2>
+          <div class="photo tilt-2" style="width:44%;aspect-ratio:1/1.05;right:4%;top:16%;">
+            <img src="images/photo5.jpg" alt="Ảnh 5" onerror="this.style.display='none'">
+          </div>
+          <div class="photo tilt-1" style="width:38%;aspect-ratio:1/1.1;left:2%;top:46%;">
+            <span class="washi"></span><img src="images/photo6.jpg" alt="Ảnh 6" onerror="this.style.display='none'">
+          </div>
+          <div class="quote-card" style="left:4%;bottom:5%;"><b>ghi chú</b>giữa muôn vàn ngày rất đỗi bình thường, người đã trở thành nhà của tôi.</div>
+        </div>
+      </div>
+      <div class="page-face page-back"><span class="page-back-mark">✦</span></div>
+    </div>
+
+    <!-- PAGE 3 — somewhere between then & now / the little things -->
+    <div class="page" id="p3" style="z-index:103;">
+      <div class="page-face page-front spread">
+        <div class="grain"></div>
+        <div class="half left kraft-bg">
+          <h2 class="page-title on-dark" style="color:#fff6e6;">giữa hôm qua<br>và hôm nay</h2>
+          <div class="quote-card" style="left:4%;top:36%;max-width:180px;">một khoảnh khắc rất bình thường, đã lặng lẽ thay đổi mọi thứ.</div>
+          <div class="photo tilt-2" style="width:38%;aspect-ratio:1/1.15;right:5%;top:12%;">
+            <span class="washi"></span><img src="images/photo7.jpg" alt="Ảnh 7" onerror="this.style.display='none'">
+          </div>
+          <span class="ticket" style="position:absolute;left:5%;bottom:6%;">ADMIT ONE<b>LOVE</b></span>
+          <div class="doodle sway" style="width:52px;height:52px;right:8%;bottom:5%;color:#8a2f3d;"><svg viewBox="0 0 24 24"><use href="#doodle-rose"/></svg></div>
+        </div>
+        <div class="half right check-bg">
+          <h2 class="page-title">những điều nhỏ bé</h2>
+          <div class="doodle sway" style="width:40px;height:40px;left:4%;top:8%;color:#7a5548;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
+          <div class="photo tilt-1" style="width:56%;aspect-ratio:1/1;right:4%;top:10%;">
+            <img src="images/photo8.jpg" alt="Ảnh 8" onerror="this.style.display='none'">
+          </div>
+          <div class="quote-card" style="left:4%;top:52%;max-width:190px;">ly cà phê buổi sáng, trò đùa chỉ hai người hiểu, những cuộc đi bộ dài và cách người luôn làm tôi cười.</div>
+          <div class="filmstrip" style="width:52%;aspect-ratio:5/1;left:4%;bottom:5%;flex-direction:row;">
+            <div class="perf top" style="flex-direction:column;left:2px;right:auto;top:0;bottom:0;height:auto;"><span></span><span></span><span></span></div>
+            <div class="frame"><img src="images/photo9.jpg" alt="Ảnh 9" onerror="this.style.display='none'"></div>
+            <div class="frame"><img src="images/photo10.jpg" alt="Ảnh 10" onerror="this.style.display='none'"></div>
+            <div class="frame"><img src="images/photo11.jpg" alt="Ảnh 11" onerror="this.style.display='none'"></div>
+            <div class="perf bot" style="flex-direction:column;right:2px;left:auto;top:0;bottom:0;height:auto;"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="page-face page-back"><span class="page-back-mark">✦</span></div>
+    </div>
+
+    <!-- PAGE 4 — places we became us / things worth keeping -->
+    <div class="page" id="p4" style="z-index:102;">
+      <div class="page-face page-front spread">
+        <div class="grain"></div>
+        <div class="half left paper-bg">
+          <h2 class="page-title">những nơi ta thành "chúng mình"</h2>
+          <div class="photo tilt-1" style="width:52%;aspect-ratio:1/1.1;left:4%;top:16%;">
+            <span class="washi"></span><img src="images/photo12.jpg" alt="Ảnh 12" onerror="this.style.display='none'">
+          </div>
+          <div class="photo tilt-2" style="width:42%;aspect-ratio:1/1.15;right:4%;bottom:6%;">
+            <img src="images/photo13.jpg" alt="Ảnh 13" onerror="this.style.display='none'">
+          </div>
+          <div class="quote-card" style="left:4%;bottom:4%;max-width:170px;">nơi chốn không quan trọng bằng việc có người bên cạnh.</div>
+        </div>
+        <div class="half right" style="background:linear-gradient(165deg,#ecd9d3,#e3c3bd);">
+          <h2 class="page-title" style="color:var(--maroon-dark);">những điều đáng giữ</h2>
+          <div class="photo tilt-1" style="width:52%;aspect-ratio:1/1.05;left:4%;top:16%;">
+            <img src="images/photo14.jpg" alt="Ảnh 14" onerror="this.style.display='none'">
+          </div>
+          <div class="quote-card" style="right:4%;top:14%;max-width:170px;"><b>bộ phim gối đầu giường</b>phần ai cũng thuộc lòng, trích sai vẫn buồn cười</div>
+          <div class="quote-card" style="right:4%;top:44%;max-width:170px;"><b>chuyện đùa riêng</b>vẫn chưa ai giải thích nổi</div>
+          <div class="doodle" style="width:28px;height:28px;right:8%;bottom:8%;color:var(--maroon-dark);"><svg viewBox="0 0 24 24"><use href="#doodle-heart"/></svg></div>
+        </div>
+      </div>
+      <div class="page-face page-back"><span class="page-back-mark">✦</span></div>
+    </div>
+
+    <!-- PAGE 5 — still collecting moments -->
+    <div class="page" id="p5" style="z-index:101;">
+      <div class="page-face page-front spread">
+        <div class="grain"></div>
+        <div class="half left paper-bg">
+          <p class="script" style="font-size:1.1rem;opacity:.35;margin:0 0 4%;">yêu người... yêu người, tôi... tôi yêu người</p>
+          <div class="photo tilt-1" style="width:70%;aspect-ratio:1/1.05;left:8%;top:14%;">
+            <img src="images/photo15.jpg" alt="Ảnh 15" onerror="this.style.display='none'">
+          </div>
+          <div class="doodle sway" style="width:44px;height:44px;left:6%;bottom:6%;color:#5b6b3f;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
+          <div class="quote-card" style="right:4%;bottom:6%;max-width:170px;">cà phê sáng, những chuyến đi không kế hoạch, chuyện đùa riêng, những đêm nói chuyện, và cách người cười.</div>
+        </div>
+        <div class="half right paper-bg">
+          <h2 class="page-title">vẫn đang góp nhặt từng khoảnh khắc</h2>
+          <div class="envelope">
+            <div class="peek tilt-3" style="left:8%;"><img src="images/photo16.jpg" alt="Ảnh 16" onerror="this.style.display='none'"></div>
+            <div class="peek tilt-1" style="left:34%;"><img src="images/photo17.jpg" alt="Ảnh 17" onerror="this.style.display='none'"></div>
+            <div class="peek tilt-4" style="left:60%;"><img src="images/photo18.jpg" alt="Ảnh 18" onerror="this.style.display='none'"></div>
+            <div class="flap"></div>
+            <div class="body">
+              <span class="doodle" style="width:18px;height:18px;left:6%;bottom:10%;color:#f2e6c9;"><svg viewBox="0 0 24 24"><use href="#doodle-flower"/></svg></span>
+              <span class="label-chip" style="position:absolute;right:6%;bottom:14%;">15 · 11 · 21</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-face page-back"><span class="page-back-mark">the end ✦</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
