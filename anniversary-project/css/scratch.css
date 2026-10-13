@@ -1,0 +1,52 @@
+/* ===== Trò chơi: Thẻ bí mật (cào thẻ) ===== */
+#s-scratch{text-align:center;}
+#s-scratch .scratch-sub{margin:0 0 14px;font-size:.95rem;opacity:.8;max-width:320px;}
+
+.scratch-card{
+  position:relative;
+  width:min(320px,100%);
+  aspect-ratio:8/5;               /* chiều cao tự theo chiều rộng -> không méo trên mọi màn hình */
+  margin:0 auto;
+  border:2px solid var(--ink);
+  border-radius:8px;
+  background:var(--paper);
+  box-shadow:5px 5px 0 #0002;
+  overflow:hidden;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+}
+.scratch-prize{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:12px 16px;text-align:center;
+  background:
+    radial-gradient(circle at 20% 25%,#ffe08a55 0 18%,transparent 19%),
+    radial-gradient(circle at 82% 78%,#ffb3c655 0 20%,transparent 21%),
+    var(--paper);
+}
+.scratch-emoji{font-size:clamp(2rem,10vw,2.6rem);line-height:1;}
+.scratch-text{font-size:clamp(.95rem,4.4vw,1.15rem);line-height:1.35;font-weight:600;}
+
+.scratch-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  touch-action:none;               /* chạm vào thẻ = cào, không cuộn trang */
+  cursor:crosshair;
+  transition:opacity .6s ease;
+}
+.scratch-card.revealed .scratch-canvas{opacity:0;pointer-events:none;}
+
+.scratch-btn{
+  margin-top:18px;min-height:44px;               /* đủ to để chạm bằng ngón tay */
+  font-family:'Mali',cursive;font-weight:600;font-size:1rem;color:var(--ink);
+  border:2px solid var(--ink);background:var(--paper);border-radius:30px;padding:8px 24px;
+  box-shadow:3px 3px 0 var(--ink);cursor:pointer;touch-action:manipulation;
+  transition:transform .15s, box-shadow .15s;
+}
+.scratch-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+.scratch-btn[hidden]{display:none;}
+
+@media (max-width:600px){
+  #s-scratch .scratch-sub{max-width:280px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .scratch-canvas{transition:none;}
+}

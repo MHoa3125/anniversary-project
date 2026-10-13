@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Mali:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/scratch.css">
+<link rel="stylesheet" href="css/ride.css">
 </head>
 <body>
 <canvas id="fx"></canvas>
@@ -49,6 +51,34 @@
   </div>
 </section>
 
+<section id="s-scratch">
+  <h2 class="title hand">Thẻ bí mật 🎟️</h2>
+  <p class="scratch-sub">Dùng ngón tay cào lớp bạc để xem bạn nhận được gì nhé</p>
+  <div class="scratch-card" id="scratchCard">
+    <div class="scratch-prize">
+      <span class="scratch-emoji" id="scratchEmoji"></span>
+      <span class="scratch-text" id="scratchText"></span>
+    </div>
+    <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+  </div>
+  <button class="scratch-btn" id="scratchAgain" type="button" hidden>Cào thẻ khác 🎟️</button>
+</section>
+
+<section id="s-ride">
+  <h2 class="title hand">Chuyến xe của miwa &amp; tuni 🛵</h2>
+  <p class="ride-sub">Chạm màn hình để nhảy qua chướng ngại, nhặt đủ 10 trái tim nhé</p>
+  <div class="ride-wrap" id="rideWrap">
+    <canvas class="ride-canvas" id="rideCanvas" aria-label="Trò chơi chuyến xe: chạm để nhảy"></canvas>
+    <div class="ride-overlay" id="rideOverlay">
+      <div class="ride-panel">
+        <div class="ride-title" id="rideTitle"></div>
+        <div class="ride-text" id="rideText"></div>
+        <button class="ride-btn" id="rideBtn" type="button">Lên xe!</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="s5">
   <h2>YOU ARE THE BEST THING THAT'S EVER BEEN MINE</h2>
 </section>
@@ -75,5 +105,7 @@
 </section>
 <a href="../photobook/index.html" id="openPhotobookBtn">Mở Photobook</a>
   <script src="js/script.js"></script>
+  <script src="js/scratch.js"></script>
+  <script src="js/ride.js"></script>
 </body>
 </html>
