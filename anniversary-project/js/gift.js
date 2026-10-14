@@ -5,8 +5,8 @@
   const sec = document.getElementById('s-gift');
   if(!sec) return;
 
-  const CODE = '1011';   // mật mã (ngày 10/11 = ngày + tháng). Đổi thành số bạn muốn, bao nhiêu chữ số cũng được.
-  const HINT = 'Gợi ý: ngày mình chính thức bắt đầu (ngày rồi đến tháng) 💭';
+  const CODE = '1111';   // mật mã (ngày 10/11 = ngày + tháng). Đổi thành số bạn muốn, bao nhiêu chữ số cũng được.
+  const HINT = 'Gợi ý: Hồ con rùa';
 
   const LETTER = {
     to: 'Gửi người thương của mình,',

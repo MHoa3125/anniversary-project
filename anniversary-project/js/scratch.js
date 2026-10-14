@@ -6,13 +6,12 @@
   if(!card) return;
 
   const PRIZES = [
-    { emoji:'💌', text:'Trà đào' },
-    { emoji:'🤗', text:'Trà sữa' },
-    { emoji:'🎬', text:'Coca Cola' },
-    { emoji:'🌙', text:'Nước ép trái cây' },
-    { emoji:'💌', text:'Matcha latte' },
-    { emoji:'🧋', text:'Sinh tố' },
-    { emoji:'🧋', text:'Trà tắc' }
+    { emoji:'🍜', text:'Phiếu ăn tối: bạn được chọn quán, mình đi ngay!' },
+    { emoji:'🤗', text:'Phiếu 1 cái ôm thật chặt, đổi bất cứ lúc nào.' },
+    { emoji:'🎬', text:'Phiếu xem phim: phim nào cũng được, bắp nước mình lo!' },
+    { emoji:'🌙', text:'Phiếu 1 buổi tối đi dạo cùng nhau, không điện thoại.' },
+    { emoji:'💌', text:'Phiếu được nũng nịu 1 lần mà không bị từ chối.' },
+    { emoji:'🧋', text:'Phiếu 1 ly trà sữa, size nào cũng được.' }
   ];
 
   const BRUSH   = 20;    // bán kính cọ (px) - đủ to cho ngón tay
@@ -82,7 +81,7 @@
     ctx.fillStyle = 'rgba(61,58,74,.85)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `700 ${Math.round(Math.min(w * 0.11, 34))}px Caveat, 'Mali', cursive`;
+    ctx.font = `400 ${Math.round(Math.min(w * 0.12, 36))}px 'Patrick Hand', cursive`;
     ctx.fillText('✨ Cào ở đây ✨', w / 2, h / 2);
   }
 
@@ -191,6 +190,8 @@
 
   // khởi tạo (đợi font tải xong để chữ "Cào ở đây" đúng kiểu chữ)
   setPrize();
-  const ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  const ready = (document.fonts && document.fonts.load)
+    ? document.fonts.load("24px 'Patrick Hand'", 'Cào ở đây').catch(() => {})   // chắc chắn font đã tải trước khi vẽ chữ lên canvas
+    : Promise.resolve();
   ready.then(() => { lastW = card.clientWidth; newRound(); });
 })();
