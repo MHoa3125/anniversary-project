@@ -6,12 +6,12 @@
   if(!card) return;
 
   const PRIZES = [
-    { emoji:'🍜', text:'Phiếu ăn tối: bạn được chọn quán, mình đi ngay!' },
-    { emoji:'🤗', text:'Phiếu 1 cái ôm thật chặt, đổi bất cứ lúc nào.' },
-    { emoji:'🎬', text:'Phiếu xem phim: phim nào cũng được, bắp nước mình lo!' },
-    { emoji:'🌙', text:'Phiếu 1 buổi tối đi dạo cùng nhau, không điện thoại.' },
-    { emoji:'💌', text:'Phiếu được nũng nịu 1 lần mà không bị từ chối.' },
-    { emoji:'🧋', text:'Phiếu 1 ly trà sữa, size nào cũng được.' }
+    { emoji:'🥛', text:'Trà đào' },
+    { emoji:'☕', text:'Trà tắc' },
+    { emoji:'🧋', text:'Trà sữa' },
+    { emoji:'🥃', text:'Hồng trà' },
+    { emoji:'🍵', text:'Matcha latte' },
+    { emoji:'🍹', text:'Trà bí đao' }
   ];
 
   const BRUSH   = 20;    // bán kính cọ (px) - đủ to cho ngón tay
