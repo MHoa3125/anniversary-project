@@ -1,0 +1,121 @@
+/* ===== Phần câu nói "YOU ARE THE BEST THING THAT'S EVER BEEN MINE" =====
+   Chỉ dùng CSS. Hiệu ứng tự chạy lại mỗi lần cuộn tới (nhờ class .is-visible do script.js gắn). */
+#s5.quote{
+  position:relative;
+  background-color:#fdfbf7;
+  background-image:radial-gradient(circle,#eadfce 1.2px,transparent 1.7px);   /* giấy chấm bi */
+  background-size:24px 24px;
+  color:var(--red);
+  text-align:center;
+  padding:90px 20px;
+}
+
+/* viền mây lượn sóng nối với nền trời xanh phía trên và dưới */
+#s5.quote::before,#s5.quote::after{
+  content:"";position:absolute;left:0;right:0;height:18px;pointer-events:none;z-index:3;
+  background-repeat:repeat-x;background-size:24px 18px;
+}
+#s5.quote::before{top:-1px;background-image:radial-gradient(circle at 12px 0,#a8d8f0 12px,transparent 12.6px);}
+#s5.quote::after{bottom:-17px;background-image:radial-gradient(circle at 12px 0,#fdfbf7 12px,transparent 12.6px);}
+
+/* ---- tiêu đề ---- */
+#s5 h2.q-title{
+  position:relative;z-index:2;margin:0;max-width:none;
+  font-family:'Caveat',cursive;font-weight:700;font-size:1rem;line-height:1;
+  display:flex;flex-direction:column;align-items:center;gap:.5em;
+}
+.q-row{display:block;position:relative;}
+.q-small{
+  font-family:'Mali',cursive;font-weight:600;color:var(--ink);opacity:.85;
+  font-size:clamp(.95rem,4.2vw,1.3rem);letter-spacing:.2em;text-transform:uppercase;
+}
+.q-big{
+  font-family:'Caveat',cursive;font-weight:700;color:var(--red);
+  font-size:clamp(2.2rem,12vw,5.6rem);line-height:1;
+  white-space:nowrap;                       /* mỗi dòng chữ to luôn nằm gọn trên 1 hàng */
+}
+.q-w{display:inline-block;opacity:0;}
+
+/* bút dạ hồng quét sau "BEST THING" */
+.q-mark{
+  padding:0 .18em;transform:rotate(-2deg);
+  background-image:linear-gradient(transparent 55%,#ffc9d6 55% 90%,transparent 90%);
+  background-repeat:no-repeat;background-size:0% 100%;
+  border-radius:6px;
+}
+/* gạch chân vẽ tay dưới "BEEN MINE" */
+.q-under{padding-bottom:.14em;transform:rotate(1.5deg);}
+.q-ul{
+  position:absolute;left:-2%;bottom:-.02em;width:104%;height:.22em;overflow:visible;
+  clip-path:inset(-20% 100% -20% 0);                 /* ẩn hết, rồi lộ dần từ trái sang phải */
+}
+.q-ul path{fill:none;stroke:var(--ink);stroke-width:3.5;stroke-linecap:round;vector-effect:non-scaling-stroke;}
+.q-heart{
+  position:absolute;right:-.55em;top:-.12em;font-size:.55em;color:var(--pink-deep);
+  opacity:0;transform:scale(0) rotate(-20deg);
+}
+
+/* ---- ngày kỷ niệm ---- */
+.q-date{
+  position:relative;z-index:2;margin:34px 0 0;
+  font-family:'Mali',cursive;font-weight:600;font-size:clamp(.9rem,3.8vw,1.05rem);
+  letter-spacing:.25em;color:var(--ink);opacity:0;
+  display:flex;align-items:center;gap:14px;
+}
+.q-date::before,.q-date::after{content:"";width:clamp(28px,12vw,70px);height:2px;background:var(--pink-deep);border-radius:2px;}
+.q-date span{color:var(--pink-deep);letter-spacing:0;}
+
+/* ---- trang trí: lấp lánh + tim bay ---- */
+.q-spark{position:absolute;z-index:2;color:#f2b134;opacity:0;pointer-events:none;line-height:1;}
+.q-spark1{top:-14%;left:-6%;font-size:1.6rem;}
+.q-spark2{top:18%;right:-8%;font-size:1.1rem;color:var(--pink-deep);}
+.q-spark3{bottom:12%;left:-9%;font-size:1.2rem;color:var(--pink-deep);}
+.q-spark4{bottom:-16%;right:-4%;font-size:1.7rem;}
+.q-hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+.q-hearts span{
+  position:absolute;bottom:-40px;left:var(--x);font-size:var(--s);color:var(--c);opacity:0;
+}
+
+/* ---- chạy hiệu ứng khi section hiện ra ---- */
+#s5.is-visible .q-w{animation:qWord .7s cubic-bezier(.2,.9,.3,1.3) forwards;animation-delay:calc(.25s + var(--i) * .28s);}
+#s5.is-visible .q-mark{animation:qMark .8s ease-out 1.5s forwards;}
+#s5.is-visible .q-ul{animation:qDraw .9s ease-out 2.8s forwards;}
+#s5.is-visible .q-heart{animation:qPop .6s cubic-bezier(.3,1.6,.5,1) 3.5s forwards;}
+#s5.is-visible .q-date{animation:qFade 1s ease 3.8s forwards;}
+#s5.is-visible .q-spark{animation:qTwinkle 2.6s ease-in-out infinite;animation-delay:calc(var(--d) + 2.4s);}
+#s5.is-visible .q-hearts span{animation:qFloat var(--t) linear infinite;animation-delay:var(--dl);}
+
+@keyframes qWord{from{opacity:0;transform:translateY(22px) rotate(-4deg) scale(.9);}to{opacity:1;transform:none;}}
+@keyframes qMark{to{background-size:100% 100%;}}
+@keyframes qDraw{to{clip-path:inset(-20% 0 -20% 0);}}
+@keyframes qPop{to{opacity:1;transform:scale(1) rotate(10deg);}}
+@keyframes qFade{to{opacity:.9;}}
+@keyframes qTwinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0);}50%{opacity:1;transform:scale(1.1) rotate(25deg);}}
+@keyframes qFloat{
+  0%{transform:translate(0,0) rotate(-8deg);opacity:0;}
+  10%{opacity:.75;}
+  50%{transform:translate(14px,-50svh) rotate(8deg);}
+  90%{opacity:.5;}
+  100%{transform:translate(-8px,-105svh) rotate(-6deg);opacity:0;}
+}
+
+@media (max-width:600px){
+  #s5.quote{padding:80px 16px;}
+  .q-spark1{left:-2%;}
+  .q-spark3{left:-3%;}
+  .q-spark2{right:-3%;}
+  .q-spark4{right:-1%;}
+  .q-heart{right:-.35em;}
+}
+
+/* người dùng tắt hiệu ứng: hiện luôn trạng thái cuối, không chuyển động */
+@media (prefers-reduced-motion:reduce){
+  .q-w{opacity:1;}
+  .q-mark{background-size:100% 100%;}
+  .q-ul{clip-path:none;}
+  .q-heart{opacity:1;transform:scale(1) rotate(10deg);}
+  .q-date{opacity:.9;}
+  #s5.is-visible .q-w,#s5.is-visible .q-mark,#s5.is-visible .q-ul,#s5.is-visible .q-heart,
+  #s5.is-visible .q-date,#s5.is-visible .q-spark,#s5.is-visible .q-hearts span{animation:none;}
+  .q-hearts,.q-spark{display:none;}
+}

@@ -1,6 +1,8 @@
 /* ===== Trò chơi: Hộp quà mật mã + lá thư ===== */
-#s-gift{text-align:center;justify-content:flex-start;}   /* canh từ trên xuống để hộp không "nhảy" khi bàn phím biến mất */
-#s-gift .gift-sub{margin:0 0 10px;font-size:.95rem;opacity:.8;max-width:320px;}
+#s-gift{text-align:center;justify-content:flex-start;font-family:'Patrick Hand',cursive;}
+#s-gift .title,#s-gift .gift-sub{text-wrap:balance;}
+#s-gift .title{font-family:'Patrick Hand',cursive;font-size:clamp(2.1rem,9vw,2.9rem);}   /* canh từ trên xuống để hộp không "nhảy" khi bàn phím biến mất */
+#s-gift .gift-sub{margin:0 0 10px;font-size:1.2rem;opacity:.85;max-width:320px;}
 
 /* ---- hộp quà (vẽ tay bằng rough.js, nắp là canvas riêng để mở được) ---- */
 .gift-box{position:relative;width:220px;height:158px;margin:6px auto 0;flex:none;}
@@ -36,24 +38,24 @@
 .gift-slots{display:flex;justify-content:center;gap:10px;}
 .gift-slot{
   width:48px;height:56px;display:flex;align-items:center;justify-content:center;
-  font-size:1.8rem;font-weight:600;
+  font-family:'Caveat',cursive;font-size:2.6rem;font-weight:700;   /* chữ số: dùng đúng Caveat */
   background:var(--paper);border:2px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 #0002;
   transition:background .15s, transform .15s;
 }
 .gift-slot.on{background:var(--pink);transform:translateY(-2px);}
 .gift-slots.shake{animation:giftShake .45s ease;}
 .gift-slots.ok .gift-slot{background:#b6f0d1;}
-.gift-msg{min-height:1.5em;margin:10px 0 10px;font-size:.95rem;}
+.gift-msg{min-height:1.5em;margin:10px 0 10px;font-size:1.2rem;}
 .gift-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 .gift-key{
-  height:52px;font-family:'Mali',cursive;font-size:1.35rem;font-weight:600;color:var(--ink);
+  height:52px;font-family:'Caveat',cursive;font-size:2.2rem;font-weight:700;line-height:1;color:var(--ink);
   background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:2px 3px 0 var(--ink);
   cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;
   transition:transform .1s, box-shadow .1s, background .1s;
 }
 .gift-key:active{transform:translate(1px,2px);box-shadow:1px 1px 0 var(--ink);background:var(--pink);}
 .gift-key:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
-.gift-hint{margin:12px 0 0;font-size:.9rem;line-height:1.4;background:#ffe08a88;border:1px dashed var(--ink);border-radius:8px;padding:8px 12px;}
+.gift-hint{margin:12px 0 0;font-size:1.15rem;line-height:1.3;background:#ffe08a88;border:1px dashed var(--ink);border-radius:8px;padding:8px 12px;}
 .gift-hint[hidden]{display:none;}
 
 /* ---- lá thư ---- */
@@ -61,7 +63,7 @@
   width:min(360px,100%);margin:18px auto 0;padding:22px 20px 20px;text-align:left;
   background:repeating-linear-gradient(#fffdf7 0 31px,#d9e8f5 31px 32px);
   border:2px solid var(--ink);border-radius:4px;box-shadow:5px 5px 0 #0002;
-  font-family:'Caveat',cursive;font-size:clamp(1.3rem,5.6vw,1.55rem);line-height:32px;color:var(--ink);
+  font-family:'Patrick Hand',cursive;font-size:clamp(1.35rem,5.8vw,1.6rem);line-height:32px;color:var(--ink);
 }
 .gift-letter[hidden]{display:none;}
 .gift-letter p{margin:0 0 32px;}                 /* mỗi đoạn cách đúng 1 dòng kẻ */
@@ -73,7 +75,7 @@
 @keyframes lineIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 .gift-btn{
   display:block;margin:6px auto 0;min-height:44px;
-  font-family:'Mali',cursive;font-weight:600;font-size:.95rem;color:var(--ink);
+  font-family:'Patrick Hand',cursive;font-weight:400;font-size:1.2rem;color:var(--ink);
   border:2px solid var(--ink);background:var(--paper);border-radius:30px;padding:8px 22px;
   box-shadow:3px 3px 0 var(--ink);cursor:pointer;touch-action:manipulation;
 }
@@ -86,7 +88,8 @@
   .gift-slot{width:46px;height:52px;}
   .gift-msg{margin:6px 0 8px;}
   .gift-keys{gap:8px;}
-  .gift-key{height:46px;font-size:1.25rem;}
+  .gift-key{height:46px;font-size:2rem;}
+  .gift-slot{font-size:2.4rem;}
 }
 
 @media (prefers-reduced-motion:reduce){

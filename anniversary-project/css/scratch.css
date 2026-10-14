@@ -1,6 +1,8 @@
 /* ===== Trò chơi: Thẻ bí mật (cào thẻ) ===== */
-#s-scratch{text-align:center;}
-#s-scratch .scratch-sub{margin:0 0 14px;font-size:.95rem;opacity:.8;max-width:320px;}
+#s-scratch{text-align:center;font-family:'Patrick Hand',cursive;}
+#s-scratch .title,#s-scratch .scratch-sub{text-wrap:balance;}
+#s-scratch .title{font-family:'Patrick Hand',cursive;font-size:clamp(2.1rem,9vw,2.9rem);}   /* Patrick Hand = font tiếng Việt gần Caveat nhất */
+#s-scratch .scratch-sub{margin:0 0 14px;font-size:1.2rem;opacity:.85;max-width:320px;}
 
 .scratch-card{
   position:relative;
@@ -24,7 +26,7 @@
     var(--paper);
 }
 .scratch-emoji{font-size:clamp(2rem,10vw,2.6rem);line-height:1;}
-.scratch-text{font-size:clamp(.95rem,4.4vw,1.15rem);line-height:1.35;font-weight:600;}
+.scratch-text{font-size:clamp(1.25rem,5.6vw,1.6rem);line-height:1.25;font-weight:400;}
 
 .scratch-canvas{
   position:absolute;inset:0;width:100%;height:100%;
@@ -36,7 +38,7 @@
 
 .scratch-btn{
   margin-top:18px;min-height:44px;               /* đủ to để chạm bằng ngón tay */
-  font-family:'Mali',cursive;font-weight:600;font-size:1rem;color:var(--ink);
+  font-family:'Patrick Hand',cursive;font-weight:400;font-size:1.25rem;color:var(--ink);
   border:2px solid var(--ink);background:var(--paper);border-radius:30px;padding:8px 24px;
   box-shadow:3px 3px 0 var(--ink);cursor:pointer;touch-action:manipulation;
   transition:transform .15s, box-shadow .15s;

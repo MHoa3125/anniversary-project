@@ -326,7 +326,7 @@
     rr(c, 8, 8, 118, 26, 13); c.fill();
     c.lineWidth = 2; c.strokeStyle = INK; c.stroke();
     heartPath(c, 24, 22, 8); c.fillStyle = '#ff6f8e'; c.fill(); c.lineWidth = 1.5; c.stroke();
-    c.fillStyle = INK; c.font = "600 14px 'Mali', cursive"; c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.fillStyle = INK; c.font = "700 18px Caveat, cursive";   // chỉ có chữ số -> dùng đúng Caveat thật c.textAlign = 'left'; c.textBaseline = 'middle';
     c.fillText(`${collected}/${GOAL}`, 38, 22);
     c.fillStyle = '#fff'; rr(c, 76, 17, 42, 10, 5); c.fill();
     c.fillStyle = '#ff8fa3'; rr(c, 76, 17, Math.max(10, 42 * collected / GOAL), 10, 5); c.fill();
