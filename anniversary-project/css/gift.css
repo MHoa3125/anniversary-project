@@ -1,0 +1,96 @@
+/* ===== Trò chơi: Hộp quà mật mã + lá thư ===== */
+#s-gift{text-align:center;justify-content:flex-start;}   /* canh từ trên xuống để hộp không "nhảy" khi bàn phím biến mất */
+#s-gift .gift-sub{margin:0 0 10px;font-size:.95rem;opacity:.8;max-width:320px;}
+
+/* ---- hộp quà (vẽ tay bằng rough.js, nắp là canvas riêng để mở được) ---- */
+.gift-box{position:relative;width:220px;height:158px;margin:6px auto 0;flex:none;}
+.gift-box canvas{position:absolute;display:block;}
+.gift-body{left:10px;top:62px;z-index:2;}
+.gift-lid{left:0;top:0;z-index:3;transition:transform .8s cubic-bezier(.34,1.4,.64,1);transform-origin:20% 90%;}
+.gift-peek{                                   /* tờ giấy ló ra khi mở nắp */
+  position:absolute;left:36px;top:40px;width:148px;height:80px;z-index:1;
+  background:repeating-linear-gradient(#fffdf7 0 13px,#c9e4ff 13px 14px);
+  border:2px solid var(--ink);border-radius:3px;
+  transition:transform .8s ease .25s;
+}
+.gift-lock{
+  position:absolute;left:50%;top:88px;z-index:4;margin-left:-22px;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  background:var(--paper);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);
+}
+.gift-box.open .gift-lid{transform:translate(22px,-50px) rotate(16deg);}
+.gift-box.open .gift-peek{transform:translateY(-46px);}
+.gift-box.open .gift-lock{animation:lockPop .7s ease forwards;}
+@keyframes lockPop{
+  0%{transform:scale(1) rotate(0);opacity:1;}
+  35%{transform:scale(1.35) rotate(-18deg);opacity:1;}
+  100%{transform:translateY(-34px) scale(.6) rotate(25deg);opacity:0;}
+}
+.gift-box.shake{animation:giftShake .45s ease;}
+@keyframes giftShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px) rotate(-1.5deg);}40%{transform:translateX(7px) rotate(1.5deg);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+
+/* ---- bàn phím mật mã ---- */
+.gift-panel{width:min(264px,100%);margin:16px auto 0;}
+.gift-panel[hidden]{display:none;}
+.gift-slots{display:flex;justify-content:center;gap:10px;}
+.gift-slot{
+  width:48px;height:56px;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:600;
+  background:var(--paper);border:2px solid var(--ink);border-radius:10px;box-shadow:2px 2px 0 #0002;
+  transition:background .15s, transform .15s;
+}
+.gift-slot.on{background:var(--pink);transform:translateY(-2px);}
+.gift-slots.shake{animation:giftShake .45s ease;}
+.gift-slots.ok .gift-slot{background:#b6f0d1;}
+.gift-msg{min-height:1.5em;margin:10px 0 10px;font-size:.95rem;}
+.gift-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.gift-key{
+  height:52px;font-family:'Mali',cursive;font-size:1.35rem;font-weight:600;color:var(--ink);
+  background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:2px 3px 0 var(--ink);
+  cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;
+  transition:transform .1s, box-shadow .1s, background .1s;
+}
+.gift-key:active{transform:translate(1px,2px);box-shadow:1px 1px 0 var(--ink);background:var(--pink);}
+.gift-key:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
+.gift-hint{margin:12px 0 0;font-size:.9rem;line-height:1.4;background:#ffe08a88;border:1px dashed var(--ink);border-radius:8px;padding:8px 12px;}
+.gift-hint[hidden]{display:none;}
+
+/* ---- lá thư ---- */
+.gift-letter{
+  width:min(360px,100%);margin:18px auto 0;padding:22px 20px 20px;text-align:left;
+  background:repeating-linear-gradient(#fffdf7 0 31px,#d9e8f5 31px 32px);
+  border:2px solid var(--ink);border-radius:4px;box-shadow:5px 5px 0 #0002;
+  font-family:'Caveat',cursive;font-size:clamp(1.3rem,5.6vw,1.55rem);line-height:32px;color:var(--ink);
+}
+.gift-letter[hidden]{display:none;}
+.gift-letter p{margin:0 0 32px;}                 /* mỗi đoạn cách đúng 1 dòng kẻ */
+.gift-letter .gl-sign{text-align:right;margin-bottom:12px;}
+.gl-line{opacity:0;}
+.gift-letter.show{animation:letterIn .8s ease both;}
+.gift-letter.show .gl-line{animation:lineIn .9s ease forwards;animation-delay:calc(var(--i) * .9s + .4s);}
+@keyframes letterIn{from{opacity:0;transform:translateY(24px) rotate(-2deg);}to{opacity:1;transform:none;}}
+@keyframes lineIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.gift-btn{
+  display:block;margin:6px auto 0;min-height:44px;
+  font-family:'Mali',cursive;font-weight:600;font-size:.95rem;color:var(--ink);
+  border:2px solid var(--ink);background:var(--paper);border-radius:30px;padding:8px 22px;
+  box-shadow:3px 3px 0 var(--ink);cursor:pointer;touch-action:manipulation;
+}
+.gift-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+
+/* điện thoại: bàn phím gọn hơn + chừa chỗ cuối trang để nút Photobook cố định không che nút bấm */
+@media (max-width:600px){
+  #s-gift{padding-bottom:120px;}
+  .gift-panel{margin-top:10px;}
+  .gift-slot{width:46px;height:52px;}
+  .gift-msg{margin:6px 0 8px;}
+  .gift-keys{gap:8px;}
+  .gift-key{height:46px;font-size:1.25rem;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .gift-lid,.gift-peek{transition:none;}
+  .gift-letter.show,.gift-letter.show .gl-line,.gift-box.shake,.gift-slots.shake{animation:none;}
+  .gl-line{opacity:1;}
+}
