@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/scratch.css">
 <link rel="stylesheet" href="css/ride.css">
+<link rel="stylesheet" href="css/gift.css">
 </head>
 <body>
 <canvas id="fx"></canvas>
@@ -79,6 +80,34 @@
   </div>
 </section>
 
+<section id="s-gift">
+  <h2 class="title hand">Hộp quà bí mật 🎁</h2>
+  <p class="gift-sub">Nhập mật mã để mở hộp quà và đọc thư nhé</p>
+  <div id="giftMain">
+    <div class="gift-box" id="giftBox">
+      <div class="gift-peek"></div>
+      <canvas class="gift-body" id="giftBody" width="200" height="96"></canvas>
+      <canvas class="gift-lid" id="giftLidC" width="220" height="70"></canvas>
+      <div class="gift-lock" aria-hidden="true">🔒</div>
+    </div>
+    <div class="gift-panel" id="giftPanel">
+      <div class="gift-slots" id="giftSlots" role="status" aria-label="Mật mã đang nhập"></div>
+      <div class="gift-msg" id="giftMsg" aria-live="polite"></div>
+      <div class="gift-keys" id="giftKeys">
+        <button class="gift-key" type="button" data-key="1" aria-label="Số 1">1</button><button class="gift-key" type="button" data-key="2" aria-label="Số 2">2</button><button class="gift-key" type="button" data-key="3" aria-label="Số 3">3</button><button class="gift-key" type="button" data-key="4" aria-label="Số 4">4</button><button class="gift-key" type="button" data-key="5" aria-label="Số 5">5</button><button class="gift-key" type="button" data-key="6" aria-label="Số 6">6</button><button class="gift-key" type="button" data-key="7" aria-label="Số 7">7</button><button class="gift-key" type="button" data-key="8" aria-label="Số 8">8</button><button class="gift-key" type="button" data-key="9" aria-label="Số 9">9</button>
+        <button class="gift-key" type="button" data-key="back" aria-label="Xóa số vừa nhập">⌫</button>
+        <button class="gift-key" type="button" data-key="0" aria-label="Số 0">0</button>
+        <button class="gift-key" type="button" data-key="hint" aria-label="Xem gợi ý">💡</button>
+      </div>
+      <p class="gift-hint" id="giftHint" hidden></p>
+    </div>
+  </div>
+  <article class="gift-letter" id="giftLetter" hidden>
+    <div id="giftLetterBody"></div>
+    <div class="gl-line"><button class="gift-btn" id="giftRelock" type="button">Gói thư lại 🎁</button></div>
+  </article>
+</section>
+
 <section id="s5">
   <h2>YOU ARE THE BEST THING THAT'S EVER BEEN MINE</h2>
 </section>
@@ -107,5 +136,6 @@
   <script src="js/script.js"></script>
   <script src="js/scratch.js"></script>
   <script src="js/ride.js"></script>
+  <script src="js/gift.js"></script>
 </body>
 </html>
