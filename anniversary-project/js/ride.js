@@ -7,7 +7,7 @@
   if(!wrap) return;
 
   const GOAL        = 10;
-  const WIN_MESSAGE = 'Chuyến xe của miwa và tuni vẫn còn đi tiếp thật xa nữa nhé 💞';
+  const WIN_MESSAGE = 'Chuyến xe của miwa và tuni vẫn còn đi tiếp thật xa nữa nho';
 
   const canvas  = document.getElementById('rideCanvas');
   const ctx     = canvas.getContext('2d');
@@ -99,7 +99,7 @@
     if(state !== 'playing') return;
     cancelAnimationFrame(raf);
     setState('paused');
-    show('Tạm dừng ⏸', 'Đang chơi dở nè, tiếp tục nhé!', 'Tiếp tục');
+    show('Tạm dừng ⏸', 'Đang chơi dở nè, tiếp tục đê', 'Tiếp tục');
   }
   function finish(kind){
     cancelAnimationFrame(raf);
@@ -374,7 +374,7 @@
   reset();
   fit();
   draw();
-  show('Sẵn sàng chưa? 🛵', `Chạm màn hình để nhảy qua chướng ngại, nhặt đủ ${GOAL} trái tim nhé!`, 'Lên xe!');
+  show('Are u ready?', `Chạm màn hình để nhảy qua`, 'Lên xe!');
   const ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   ready.then(() => { if(state !== 'playing') draw(); });
   /*TEST_HOOK*/

@@ -82,7 +82,7 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = `400 ${Math.round(Math.min(w * 0.12, 36))}px 'Patrick Hand', cursive`;
-    ctx.fillText('✨ Cào ở đây ✨', w / 2, h / 2);
+    ctx.fillText('Cào ở đây', w / 2, h / 2);
   }
 
   function resetProgress(){

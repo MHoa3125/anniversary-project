@@ -13,13 +13,11 @@ anniversary-project/
     ├── photo1.jpg       ← 2 ảnh polaroid ở đầu trang
     ├── photo2.jpg
     ├── photo3.jpg       ← ảnh trong "cuốn sổ" ở mục Prolog
-    ├── heart-puzzle.jpg ← ảnh dùng cho trái tim ghép hình
     ├── photo4.jpg       ← 4 ảnh rơi ra từ hộp quà
     ├── photo5.jpg
     ├── photo6.jpg
     └── photo7.jpg
 ```
-
 Tách ra 3 file (HTML / CSS / JS) + 1 thư mục ảnh riêng thay vì gộp chung 1 file,
 để sau này bạn chỉnh sửa dễ hơn nhiều:
 - Đổi màu sắc, font, animation → sửa trong `css/style.css`

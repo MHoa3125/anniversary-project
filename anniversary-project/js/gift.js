@@ -9,14 +9,14 @@
   const HINT = 'Gợi ý: Hồ con rùa';
 
   const LETTER = {
-    to: 'Gửi người thương của mình,',
+    to: 'Dear my love,',
     paragraphs: [
-      'Mình không giỏi nói lời hoa mỹ, nên mình gói hết vào chiếc hộp nhỏ này.',
-      'Cảm ơn vì đã cùng mình ngồi chung một chiếc xe, đi qua những ngày vui, những ngày mệt, và cả những lần mình ngốc nghếch.',
-      'Mong chuyến xe của hai đứa mình còn đi thật xa, qua thật nhiều con đường, nhặt thật nhiều trái tim nữa.',
-      'Happy Anniversary! Cảm ơn vì đã là điều tuyệt nhất của mình 💞'
+      'Love isn’t always about grand gestures. Sometimes, it’s just being there for each other',
+      'Sharing little moments, and making ordinary days feel a little more special',
+      'With you, even the simplest things mean a lot.',
+      'Thank you and love you, cục húi 🐵'
     ],
-    sign: '— của mình, mãi mãi'
+    sign: 'cục dàng của tìn'
   };
 
   const INK = '#3d3a4a';
@@ -91,7 +91,7 @@
 
   function wrong(){
     wrongCount++;
-    say('Chưa đúng rồi, thử lại nhé 💭');
+    say('Sai gòiiii!!!');
     slotsEl.classList.add('shake');
     box.classList.add('shake');
     try{ if(navigator.vibrate) navigator.vibrate(120); }catch(_){}
@@ -108,7 +108,7 @@
   /* ---------- mở hộp ---------- */
   function unlock(){
     state = 'opening';
-    say('Đúng rồi! 🎉');
+    say('Quá chính xáccc');
     slotsEl.classList.add('ok');
     box.classList.add('open');
     try{ if(typeof confettiBurst === 'function') confettiBurst(); }catch(_){}

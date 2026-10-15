@@ -155,29 +155,12 @@ h1.hand{font-size:clamp(2.8rem,14vw,4rem);line-height:1;margin:18px 0 0;}
 .player{margin-top:14px;font-size:1.6rem;background:var(--paper);border:2px solid var(--ink);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;}
 canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50;}
 
-/* ---------- section 3 (câu đố trái tim - hiện chưa dùng trong index.html) ---------- */
-#s3 .hint{max-width:520px;text-align:center;}
-.puzzle-stage{position:relative;width:100%;max-width:560px;height:auto;display:flex;flex-direction:column;align-items:center;gap:20px;}
-.pile-zone{position:static;width:90%;height:200px;border:2.5px dashed #0002;border-radius:16px;margin:0 auto;}
-.heart-target{position:static;width:min(260px,72vw);height:min(260px,72vw);cursor:pointer;border:3px solid #000;box-shadow:5px 5px 0 rgba(0,0,0,.5),-5px -5px 0 rgba(0,0,0,.5);border-radius:8px;margin-top:20px;}
-.heart-target-fill{position:absolute;inset:0;background:black;clip-path:none;border-radius:8px;}
-.heart-target-lines{position:absolute;inset:0;pointer-events:none;}
-.heart-target .tap-hint{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);background:#fffaf2ee;border:1px solid var(--ink);border-radius:20px;padding:2px 10px;font-size:.72rem;white-space:nowrap;z-index:4;}
-.piece{position:absolute;background-image:url('../images/heart-puzzle.jpg');background-size:300% 200%;cursor:grab;touch-action:none;
-  transition:left .6s cubic-bezier(.17,.84,.44,1), top .6s cubic-bezier(.17,.84,.44,1), transform .6s cubic-bezier(.17,.84,.44,1);}
-.piece.placed{cursor:default;}
-.piece:active{cursor:grabbing;}
-.piece.shake{animation:shake .35s ease;}
-@keyframes shake{
-  0%,100%{transform:rotate(0deg) translateX(0);}
-  25%{transform:rotate(-6deg) translateX(-4px);}
-  75%{transform:rotate(6deg) translateX(4px);}
-}
+
 
 /* ---------- nút Mở Photobook (gom 3 kiểu cũ thành 1: bong bóng hồng) ---------- */
 #openPhotobookBtn{
   position:fixed;z-index:100;
-  bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  top:calc(20px + env(safe-area-inset-top,0px));
   right:calc(20px + env(safe-area-inset-right,0px));
   font-family:'Mali',cursive;font-size:1.4rem;
   padding:14px 28px;
@@ -188,10 +171,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50;}
   text-decoration:none;cursor:pointer;outline:none;
   transition:transform .2s ease-in-out, box-shadow .2s ease-in-out;
   touch-action:manipulation;
-}
-#openPhotobookBtn::after{
-  content:'';position:absolute;bottom:-10px;right:15px;width:0;height:0;
-  border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid var(--pink-deep);
 }
 #openPhotobookBtn:hover{transform:translateY(-3px);box-shadow:7px 7px 0 var(--pink-deep);}
 #openPhotobookBtn:active{transform:translateY(0);box-shadow:3px 3px 0 var(--pink-deep);}
@@ -240,10 +219,9 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50;}
   /* nút Photobook gọn hơn để không che nội dung */
   #openPhotobookBtn{
     font-size:1.05rem;padding:10px 18px;
-    bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    top:calc(16px + env(safe-area-inset-top,0px));
     right:calc(14px + env(safe-area-inset-right,0px));
   }
-  #openPhotobookBtn::after{right:12px;}
 }
 
 /* điện thoại rất nhỏ (≤ 360px) */
