@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15100f">
 <title>Photobook — Cuốn sổ kỷ niệm</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Oswald:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -51,35 +53,89 @@
       <path d="M8.6 16.4c1.4-1 2.6-1 3.4 0M15.4 16.4c-1.4-1-2.6-1-3.4 0" stroke="#4b6b3f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
       <path d="M12 3c-3 .6-4.4 3-3.2 5 .8-1.6 2-2 3.2-1.6-1.6.6-2.2 2-1.4 3.4 1-1 2.2-1.2 3-.4-1 .4-1.6 1.4-1 2.6 2.4-.2 4-2 4-4.4C16.6 4.6 14.6 2.6 12 3Z" fill="#8a2f3d" stroke="#6b1f2b" stroke-width=".6"/>
     </g>
+    <g id="doodle-wheel" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10.4"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/>
+      <path d="M12 5V10.3M12 13.7V19M5 12H10.3M13.7 12H19M7.05 7.05L10.8 10.8M13.2 13.2L16.95 16.95M16.95 7.05L13.2 10.8M10.8 13.2L7.05 16.95"/>
+    </g>
+    <g id="doodle-steer" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M2.4 10.8C6 10.2 8.6 10.6 9.2 11.5M21.6 10.8C18 10.2 15.4 10.6 14.8 11.5M12 15V21.8"/>
+    </g>
+    <g id="doodle-gauge" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 18A9.5 9.5 0 0 1 21.5 18"/><path d="M2.5 18H21.5"/>
+      <path d="M4.2 12.6l1.6.9M7.4 8.4l1.1 1.5M12 6.6v1.9M16.6 8.4l-1.1 1.5M19.8 12.6l-1.6.9"/>
+      <path d="M12 18L16.4 11"/><circle cx="12" cy="18" r="1.3" fill="currentColor"/>
+    </g>
+    <g id="doodle-flag" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 21.5V2.5"/><path d="M5 3.5C9 2 12 5 16 3.6C18 3 19.6 3.3 21 3.9V13.3C19.6 12.7 18 12.4 16 13C12 14.4 9 11.4 5 13Z"/>
+      <path d="M5 8.2C9 6.7 12 9.7 16 8.3C18 7.7 19.6 8 21 8.6"/><path d="M10.4 4.5V11.2M15.8 3.7V10.4"/>
+      <path d="M5 3.5L10.4 4.4V8.3L5 8.2ZM15.8 3.7L21 3.9V8.6L15.8 8.4ZM10.4 8.3L15.8 8.4V12.8L10.4 11.2Z" fill="currentColor" stroke="none" opacity=".8"/>
+    </g>
+    <g id="doodle-f1" transform="scale(.42)" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11 L26 21"/><path d="M6 5 H36 V10 H6 Z"/><path d="M6 2 V17"/>
+      <path d="M166 31 L151 26 C137 22 125 20 111 18 L103 16 C97 10 87 9 79 11 L65 7 C51 8 41 12 31 15 L23 17 L21 25 L29 33 L151 34 Z"/>
+      <path d="M44 21 C70 20 100 22 124 26"/><path d="M150 38 H170 V41 H146 Z"/>
+      <circle cx="42" cy="32" r="11"/><circle cx="42" cy="32" r="4"/><circle cx="131" cy="33" r="9.5"/><circle cx="131" cy="33" r="3.6"/>
+      <circle cx="91" cy="14.5" r="4.6"/><path d="M84 17 Q92 6 105 18"/>
+    </g>
+    <g id="doodle-minicar" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 18V13.5C3 12 4 11 5.5 10.6L10 9.6L13 5.6C13.8 4.7 14.8 4.4 16 4.4H26C27.2 4.4 28.2 4.7 29 5.6L32 9.6L35 10.6C36.5 11 37 12 37 13.5V18Z"/>
+      <path d="M14 6.3L11.6 9.6H20V6.3Z M22 6.3V9.6H30.4L28 6.3Z"/>
+      <circle cx="11" cy="18.2" r="3.6"/><circle cx="29.5" cy="18.2" r="3.6"/><circle cx="35" cy="13.2" r="1.5"/><path d="M3 15H5"/>
+    </g>
+    <g id="doodle-wrench" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15.6 2.8A5.2 5.2 0 0 0 9.3 9.6L3.4 15.5a2.2 2.2 0 0 0 3.1 3.1L12.4 12.7A5.2 5.2 0 0 0 19.2 6.4L16.1 9.5L13.6 8.9L13 6.4Z"/>
+      <circle cx="5" cy="17" r=".7" fill="currentColor"/>
+    </g>
+    <g id="doodle-key" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="7" cy="7.5" r="4.2"/><circle cx="7" cy="7.5" r="1.3"/><path d="M10 10.5L20.5 21M16.5 17L19 14.5M19.2 19.6L21.6 17.2"/>
+    </g>
+    <g id="doodle-helmet" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 16C3 8.5 8 4 13 4C18 4 21.5 8 21.5 13.5V16.5C21.5 17.3 20.8 18 20 18H6C4.3 18 3 17.3 3 16Z"/>
+      <path d="M11 10.5H21.4C21.4 13 20.2 14.2 18 14.2H11Z"/><path d="M3.5 13.5H9"/>
+    </g>
+    <g id="doodle-trophy" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H16V9C16 11.8 14.2 13.4 12 13.4C9.8 13.4 8 11.8 8 9Z"/><path d="M8 5H4C4 9 5 10.4 8 10.6M16 5H20C20 9 19 10.4 16 10.6"/>
+      <path d="M12 13.4V17M9.4 17H14.6V21H9.4Z M7.6 21H16.4"/>
+    </g>
   </defs>
 </svg>
 
-<div class="book-wrap">
+<main class="stage">
   <div class="book-controls">
-
-    <span>photobook</span>
-    <span class="count"><span id="pageNo">1</span> / 5</span>
+    <a class="back-link" href="../index.html">← Trang chính</a>
+    <span class="title">Photobook</span>
+    <span class="count"><span id="pageNo">01</span> <small>/ <span id="totalNo">05</span></small></span>
   </div>
-  <div class="book wobble-effect" id="book">
-    <div class="click-area left-click-area"></div>
-    <div class="click-area right-click-area"></div>
+
+  <div class="book-wrap" id="bookWrap">
+    <div class="book-scaler" id="bookScaler">
+      <div class="book wobble-effect" id="book">
 
     <!-- PAGE 1 — cover -->
     <div class="page" id="p1" style="z-index:105;">
       <div class="page-face page-front cover">
+        <div class="cover-bg"><i class="l"></i><i class="r"></i></div>
         <div class="grain"></div>
+        <div class="cover-spine"></div>
+        <div class="cover-foil"></div>
+        <div class="cover-road" aria-hidden="true"></div>
         <div class="doodle sparkle" style="top:9%;right:11%;width:22px;height:22px;color:#efe4d3;"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
         <div class="doodle sparkle" style="bottom:12%;left:9%;width:15px;height:15px;color:#efe4d3;animation-delay:1s;"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
         <div class="doodle float" style="top:15%; left:15%; width:30px; height:30px; color:#e8b9be;"><svg viewBox="0 0 24 24"><use href="#doodle-flower"/></svg></div>
         <div class="doodle" style="bottom:15%; right:15%; width:25px; height:25px; color:#ff8fa3;"><svg viewBox="0 0 24 24"><use href="#doodle-heart"/></svg></div>
-        <div class="doodle" style="top:5%; left:40%; width:40px; height:40px; color:#4a3527;"><svg viewBox="0 0 24 24"><use href="#doodle-cat"/></svg></div>
+        <div class="doodle" style="top:7%; left:26.6%; width:40px; height:40px; color:#f1e6d2;"><svg viewBox="0 0 24 24"><use href="#doodle-cat"/></svg></div>
+        <div class="cover-eyebrowbar" aria-hidden="true"><div class="doodle on-burg wave" style="" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-flag"/></svg></div><span>Grand Prix of Us</span><div class="doodle on-burg wave" style="transform:scaleX(-1)" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-flag"/></svg></div></div>
         <div class="cover-card">
           <div class="tape t1"></div>
           <p class="cover-eyebrow">US</p>
           <h1 class="cover-title">🙉💗🐣</h1>
-          <p class="cover-sub"></p>
+          <p class="cover-sub">Est. 10 · 11 · 2024</p>
           <div class="doodle sway" style="width:64px;height:64px;left:6%;bottom:-8%;color:#6b5240;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
         </div>
+        <div class="cover-num n10" aria-hidden="true">10</div>
+        <div class="cover-num n11" aria-hidden="true">11</div>
+        <div class="cover-cars"><img class="mini" src="images/car-mini.webp" alt="Mini Cooper S"><span class="heart" aria-hidden="true">♥</span><img class="p408" src="images/car-408.webp" alt="Peugeot 408"></div>
+        <div class="cover-shine" aria-hidden="true"></div>
       </div>
       <div class="page-face page-back"><span class="page-back-mark">✦</span></div>
     </div>
@@ -89,6 +145,7 @@
       <div class="page-face page-front spread">
         <div class="grain"></div>
         <div class="half left dark-bg">
+          <div class="doodle on-burg mark spin slow" style="right:-10%;bottom:-3%;width:210px;height:210px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wheel"/></svg></div><div class="doodle on-burg wave" style="top:2.2%;left:8%;width:34px;height:34px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-flag"/></svg></div><div class="doodle on-burg" style="right:5%;bottom:10.5%;width:70px;height:70px;" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 18A9.5 9.5 0 0 1 21.5 18"/><path d="M2.5 18H21.5"/><path d="M4.2 12.6l1.6.9M7.4 8.4l1.1 1.5M12 6.6v1.9M16.6 8.4l-1.1 1.5M19.8 12.6l-1.6.9"/><path class="needle" d="M12 18L16.4 11"/><circle cx="12" cy="18" r="1.3" fill="currentColor"/></svg></div><div class="ticker" aria-hidden="true"><span>Grid start ✦ Mini Cooper S ✦ 10·11 ✦ Our song ✦ Grid start ✦ Mini Cooper S ✦ 10·11 ✦ Our song ✦ Grid start ✦ Mini Cooper S ✦ 10·11 ✦ Our song ✦ Grid start ✦ Mini Cooper S ✦ 10·11 ✦ Our song ✦ </span></div>
           <div class="vinyl float" style="width:56%;aspect-ratio:1;left:-8%;top:16%;"></div>
           <div class="filmstrip" style="width:34%;aspect-ratio:1/2.5;top:6%;right:6%;">
             <div class="perf top"><span></span><span></span><span></span><span></span></div>
@@ -103,6 +160,7 @@
           <p class="script" style="position:absolute;bottom:3%;left:44%;color:#efe4d3cc;font-size:1.2rem;">Our song is our story</p>
         </div>
         <div class="half right paper-bg">
+          <div class="doodle on-blue mark spin slow rev" style="left:-9%;top:44%;width:190px;height:190px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wheel"/></svg></div><div class="doodle on-blue float" style="top:2.6%;right:6%;width:92px;height:28px;" aria-hidden="true"><svg viewBox="0 0 72 22"><use href="#doodle-f1"/></svg></div><div class="tire-track on-blue" style="right:2%;bottom:7%;width:72%;" aria-hidden="true"></div><div class="sticker" style="right:3%;bottom:9.5%;width:212px;transform:rotate(4deg);" aria-hidden="true"><img src="images/car-408.webp" alt="Peugeot 408"></div><div class="ticker" aria-hidden="true"><span>Pole position ✦ Peugeot 408 ✦ 10·11 ✦ Grand Prix of Us ✦ Pole position ✦ Peugeot 408 ✦ 10·11 ✦ Grand Prix of Us ✦ Pole position ✦ Peugeot 408 ✦ 10·11 ✦ Grand Prix of Us ✦ Pole position ✦ Peugeot 408 ✦ 10·11 ✦ Grand Prix of Us ✦ </span></div>
           <div class="doodle sparkle" style="top:6%;left:6%;width:16px;height:16px;color:var(--ink-soft);"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
           <h2 class="page-title">🌻🌷🌹</h2>
           <div class="photo tilt-2" style="width:44%;aspect-ratio:1/1.05;right:4%;top:16%;">
@@ -122,6 +180,7 @@
       <div class="page-face page-front spread">
         <div class="grain"></div>
         <div class="half left kraft-bg">
+          <div class="doodle on-burg mark spin slow" style="left:28%;top:-9%;width:160px;height:160px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wheel"/></svg></div><div class="doodle on-burg sway" style="top:3.5%;left:27%;width:38px;height:38px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-helmet"/></svg></div><div class="tire-track on-burg" style="right:1%;bottom:11%;width:62%;" aria-hidden="true"></div><div class="sticker" style="right:3%;bottom:15%;width:198px;transform:rotate(-5deg);" aria-hidden="true"><img src="images/car-mini.webp" alt="Mini Cooper S"></div><div class="ticker" aria-hidden="true"><span>Pit stop ✦ Admit two ✦ Full throttle ✦ Mini × 408 ✦ Pit stop ✦ Admit two ✦ Full throttle ✦ Mini × 408 ✦ Pit stop ✦ Admit two ✦ Full throttle ✦ Mini × 408 ✦ Pit stop ✦ Admit two ✦ Full throttle ✦ Mini × 408 ✦ </span></div>
           <h2 class="page-title on-dark" style="color:#fff6e6;">🙊</h2>
           <div class="quote-card" style="left:4%;top:36%;max-width:180px;">A ordinary moment, quietly changed everything.</div>
           <div class="photo tilt-2" style="width:38%;aspect-ratio:1/1.15;right:5%;top:12%;">
@@ -131,9 +190,10 @@
             <span class="washi"></span><img src="images/photo18.jpg" alt="Ảnh 18" onerror="this.style.display='none'">
           </div>
           <span class="ticket" style="position:absolute;left:5%;bottom:6%;">ADMIT ONE<b>LOVE</b></span>
-          <div class="doodle sway" style="width:52px;height:52px;right:8%;bottom:5%;color:#8a2f3d;"><svg viewBox="0 0 24 24"><use href="#doodle-rose"/></svg></div>
+          <div class="doodle sway halo" style="width:52px;height:52px;right:8%;bottom:5%;color:#8a2f3d;"><svg viewBox="0 0 24 24"><use href="#doodle-rose"/></svg></div>
         </div>
         <div class="half right check-bg">
+          <div class="doodle on-blue sway" style="left:7%;top:19%;width:52px;height:52px;transform:rotate(-22deg);" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wrench"/></svg></div><div class="doodle on-blue float" style="left:24%;top:30%;width:42px;height:42px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-key"/></svg></div><div class="tire-track on-blue" style="right:2%;bottom:10.5%;width:48%;" aria-hidden="true"></div><div class="doodle on-blue wave" style="right:5%;bottom:22%;width:46px;height:46px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-flag"/></svg></div><div class="doodle on-blue" style="right:3%;bottom:12.5%;width:176px;height:54px;" aria-hidden="true"><svg viewBox="0 0 72 22"><use href="#doodle-f1"/></svg></div><div class="ticker" aria-hidden="true"><span>Fastest lap ✦ Hé hé ✦ Slipstream ✦ 10·11 ✦ Fastest lap ✦ Hé hé ✦ Slipstream ✦ 10·11 ✦ Fastest lap ✦ Hé hé ✦ Slipstream ✦ 10·11 ✦ Fastest lap ✦ Hé hé ✦ Slipstream ✦ 10·11 ✦ </span></div>
           <h2 class="page-title">🐤</h2>
           <div class="doodle sway" style="width:40px;height:40px;left:4%;top:8%;color:#7a5548;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
           <div class="photo tilt-1" style="width:56%;aspect-ratio:1/1;right:4%;top:10%;">
@@ -157,6 +217,7 @@
       <div class="page-face page-front spread">
         <div class="grain"></div>
         <div class="half left paper-bg">
+          <div class="doodle on-burg float" style="top:2.8%;right:5%;width:150px;height:46px;" aria-hidden="true"><svg viewBox="0 0 72 22"><use href="#doodle-f1"/></svg></div><div class="doodle on-burg spin" style="left:9%;top:64%;width:72px;height:72px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wheel"/></svg></div><div class="stamp on-burg" style="left:31%;top:68%;" aria-hidden="true">Parc fermé<small>10 · 11</small></div><div class="ticker" aria-hidden="true"><span>Parc fermé ✦ Bedtime movies ✦ Night race ✦ Parc fermé ✦ Bedtime movies ✦ Night race ✦ Parc fermé ✦ Bedtime movies ✦ Night race ✦ Parc fermé ✦ Bedtime movies ✦ Night race ✦ </span></div>
           <h2 class="page-title">💫🌙</h2>
           <div class="photo tilt-1" style="width:52%;aspect-ratio:1/1.1;left:4%;top:16%;">
             <span class="washi"></span><img src="images/photo12.jpg" alt="Ảnh 12" onerror="this.style.display='none'">
@@ -166,7 +227,8 @@
           </div>
           <div class="quote-card" style="left:4%;bottom:4%;max-width:170px;">A ordinary moment, quietly changed everything.</div>
         </div>
-        <div class="half right" style="background:linear-gradient(165deg,#ecd9d3,#e3c3bd);">
+        <div class="half right speed-bg">
+          <div class="tire-track on-blue" style="left:2%;right:2%;bottom:12%;" aria-hidden="true"></div><div class="sticker" style="left:3%;bottom:13.5%;width:184px;transform:rotate(-3deg);" aria-hidden="true"><img src="images/car-mini.webp" alt="Mini Cooper S"></div><span class="heartpop" aria-hidden="true">♥</span><div class="sticker" style="right:3%;bottom:13.5%;width:204px;transform:rotate(3deg);" aria-hidden="true"><img src="images/car-408.webp" alt="Peugeot 408"></div><div class="ticker" aria-hidden="true"><span>Night race ✦ Private jokes ✦ Hairpin ✦ 10·11 ✦ Night race ✦ Private jokes ✦ Hairpin ✦ 10·11 ✦ Night race ✦ Private jokes ✦ Hairpin ✦ 10·11 ✦ Night race ✦ Private jokes ✦ Hairpin ✦ 10·11 ✦ </span></div>
           <h2 class="page-title" style="color:var(--maroon-dark);">🎑🌠🌄</h2>
           <div class="photo tilt-1" style="width:52%;aspect-ratio:1/1.05;left:4%;top:16%;">
             <img src="images/photo14.jpg" alt="Ảnh 14" onerror="this.style.display='none'">
@@ -184,17 +246,19 @@
       <div class="page-face page-front spread">
         <div class="grain"></div>
         <div class="half left paper-bg">
+          <div class="doodle on-burg mark spin slow rev" style="right:-15%;top:22%;width:230px;height:230px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-steer"/></svg></div><div class="doodle on-burg float" style="top:3%;right:8%;width:46px;height:46px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-trophy"/></svg></div><div class="doodle on-burg sparkle" style="top:6.5%;right:25%;width:16px;height:16px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div><div class="doodle on-burg wave" style="left:23%;bottom:11%;width:58px;height:58px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-flag"/></svg></div><div class="stamp on-burg" style="left:35%;bottom:11.5%;" aria-hidden="true">Lap 05<small>still going</small></div><div class="ticker" aria-hidden="true"><span>Lap 05 ✦ Still collecting moments ✦ Lap 05 ✦ Still collecting moments ✦ Lap 05 ✦ Still collecting moments ✦ Lap 05 ✦ Still collecting moments ✦ </span></div>
           <p class="script" style="font-size:1.1rem;opacity:.35;margin:0 0 4%;">🌈🌖💥</p>
           <div class="photo tilt-1" style="width:70%;aspect-ratio:1/1.05;left:8%;top:14%;">
             <img src="images/photo15.jpg" alt="Ảnh 15" onerror="this.style.display='none'">
           </div>
-          <div class="doodle sway" style="width:44px;height:44px;left:6%;bottom:6%;color:#5b6b3f;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
+          <div class="doodle sway halo" style="width:44px;height:44px;left:6%;bottom:6%;color:#5b6b3f;"><svg viewBox="0 0 24 24"><use href="#doodle-lavender"/></svg></div>
           <div class="quote-card" style="right:4%;bottom:6%;max-width:170px;">A ordinary moment, quietly changed everything.</div>
         </div>
         <div class="half right paper-bg">
+          <div class="doodle on-blue mark spin slow" style="left:-10%;top:54%;width:176px;height:176px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-wheel"/></svg></div><div class="doodle on-blue float" style="top:3.5%;right:7%;width:50px;height:50px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-trophy"/></svg></div><div class="doodle on-blue sparkle" style="top:5%;right:24%;width:18px;height:18px;" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div><div class="stamp on-blue" style="left:8%;bottom:20%;" aria-hidden="true">Finish<small>10 · 11 · ∞</small></div><div class="doodle on-blue float" style="left:5%;bottom:49px;width:150px;height:46px;" aria-hidden="true"><svg viewBox="0 0 72 22"><use href="#doodle-f1"/></svg></div><div class="finishline" style="bottom:22px;height:16px;" aria-hidden="true"></div><div class="ticker" aria-hidden="true"><span>Chequered flag ✦ The best ones are with you ✦ Chequered flag ✦ The best ones are with you ✦ Chequered flag ✦ The best ones are with you ✦ Chequered flag ✦ The best ones are with you ✦ </span></div>
           <h2 class="page-title">🌺🐶🏵️</h2>
           <div class="doodle sparkle" style="top:8%;left:8%;width:22px;height:22px;color:var(--ink-soft);"><svg viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg></div>
-          <div class="quote-card" style="left:4%;top:18%;max-width:170px;"><b>Memories</b>The best ones are always with you.</div>
+
           <div class="photo tilt-3" style="width:48%;aspect-ratio:1/1.05;left:8%;top:14%;">
             <img src="images/photo16.jpg" alt="Ảnh 16" onerror="this.style.display='none'">
           </div>
@@ -206,8 +270,19 @@
       <div class="page-face page-back"><span class="page-back-mark">the end ✦</span></div>
     </div>
 
+
+      </div>
+    </div>
+    <button class="zone zone-prev" id="zonePrev" type="button" aria-label="Trang trước"></button>
+    <button class="zone zone-next" id="zoneNext" type="button" aria-label="Trang sau"></button>
   </div>
-</div>
+
+  <div class="book-nav">
+    <button class="nav-btn prev" id="btnPrev" type="button">‹ Trước</button>
+    <p class="book-hint"><b>←</b> <b>→</b> hoặc chạm hai mép sách để lật trang</p>
+    <button class="nav-btn next" id="btnNext" type="button">Sau ›</button>
+  </div>
+</main>
 
 <script src="js/script.js"></script>
 </body>

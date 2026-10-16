@@ -114,7 +114,7 @@ let spawned=false;
 const filled={};
 
 // filenames of the 4 photos that fall out of the box — replace these files in /images to use your own photos
-const boxPhotos=['images/photo4.jpg','images/photo5.jpg','images/photo6.jpg','images/photo7.jpg'];
+const boxPhotos=['images/photo4.jpg','images/photo5.jpg','images/photo6.jpg','images/photo7.png'];
 
 /*
   Kéo thả dùng Pointer Events: 1 bộ code chạy cho cả chuột, ngón tay và bút.
