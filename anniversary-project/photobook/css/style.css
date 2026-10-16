@@ -1,37 +1,81 @@
+/* =====================================================================
+   PHOTOBOOK — vintage F1 & ô tô
+   Tông: trang TRÁI đỏ đô · trang PHẢI xanh dương đạm · vàng đồng ánh kim
+   Cách co giãn: cả cuốn sách được vẽ ở "kích thước thiết kế" 980×614px rồi
+   thu/phóng bằng --k (do script.js tính) → bố cục ảnh luôn giữ nguyên tỉ lệ.
+   ===================================================================== */
 :root{
   --ink:#4a3527; --ink-soft:#6b5240;
-  --cream:#efe6d5; --cream2:#e3d7bf;
-  --kraft:#c99a63; --kraft-dark:#a97a45;
-  --maroon:#7a2e3a; --maroon-dark:#5a2029;
-  --dusk:#3d2a22; --dusk2:#2a1c16;
-  --pink:#e8b9be; --pink-dark:#c48891;
-  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  --cream:#f1e6d2; --cream2:#e3d6bd;
+  --burg:#7a2233; --burg-d:#4d1220; --burg-dd:#33091a; --burg-l:#94344a;
+  --blue:#9ab7d4; --blue-d:#6f93b8; --blue-dd:#2c4663; --blue-l:#bdd2e6;
+  --gold:#d9b872; --gold-d:#b8964f;
+  --asphalt:#2b2630;
+  /* giữ lại tên biến cũ để không vỡ chỗ nào còn dùng */
+  --kraft:#c99a63; --kraft-dark:#a97a45; --maroon:#7a2e3a; --maroon-dark:#5a2029;
+  --dusk:#3d2a22; --dusk2:#2a1c16; --pink:#e8b9be; --pink-dark:#c48891;
+  --chrome:128px;          /* chiều cao dành cho thanh trên + thanh dưới */
+  box-sizing:border-box;
 }
 *{box-sizing:border-box;}
-html{scroll-padding-top:env(safe-area-inset-top,0px);}
+html{-webkit-text-size-adjust:100%;}
 body{
-  margin:0; min-height:100svh; display:flex; align-items:center; justify-content:center;
+  margin:0; min-height:100vh; min-height:100svh; display:flex; align-items:center; justify-content:center;
   font-family:'Patrick Hand',cursive; color:var(--ink);
-  background:radial-gradient(ellipse at center, #4a2f28 0%, #2b1c17 70%, #1c120e 100%);
-  overflow:hidden; padding:24px;
+  background:
+    radial-gradient(ellipse 55% 70% at 18% 50%, rgba(140,45,66,.38), transparent 62%),
+    radial-gradient(ellipse 55% 70% at 82% 50%, rgba(90,125,170,.30), transparent 62%),
+    radial-gradient(ellipse at center, #241a1c 0%, #15100f 75%, #0e0a09 100%);
+  overflow:hidden;
+  padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+  -webkit-tap-highlight-color:transparent;
+}
+body::before{            /* sàn gara: caro rất mờ */
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.045;
+  background:conic-gradient(#fff 25%,transparent 0 50%,#fff 0 75%,transparent 0) 0 0/56px 56px;
 }
 .script{font-family:'Patrick Hand',cursive;}
 
-/* subtle film-grain overlay used on every page for a vintage paper feel */
+/* hạt giấy cũ phủ lên mọi trang */
 .grain{position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
-/* ---------- book shell ---------- */
-.book-wrap{position:relative;width:min(94vw, 980px);aspect-ratio:15/9.4;perspective:2600px;}
-.book-controls{position:absolute;top:-46px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;color:#eee;font-size:.85rem;opacity:.85;}
-.book-controls .count{font-family:'Patrick Hand',cursive;font-size:1.3rem;}
+/* ---------- khung sân khấu: thanh trên / sách / thanh dưới ---------- */
+.stage{
+  position:relative;display:flex;flex-direction:column;gap:12px;
+  width:min(94vw,980px,calc((100vh - var(--chrome)) * 1.5957));
+}
+@supports (height:100svh){
+  .stage{width:min(94vw,980px,calc((100svh - var(--chrome)) * 1.5957));}
+}
+.book-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#f1e6d2;min-height:34px;}
+.book-controls .title{font:700 .95rem/1 'Oswald','Patrick Hand',sans-serif;letter-spacing:.24em;text-transform:uppercase;opacity:.9;
+  display:flex;align-items:center;gap:8px;}
+.book-controls .title:before,.book-controls .title:after{content:"";width:18px;height:10px;opacity:.9;
+  background:conic-gradient(#f1e6d2 25%,#1b1923 0 50%,#f1e6d2 0 75%,#1b1923 0) 0 0/10px 10px;}
+.book-controls .count{font:700 1.05rem/1 'Oswald','Patrick Hand',sans-serif;letter-spacing:.14em;min-width:64px;text-align:right;}
+.book-controls .count small{opacity:.6;font-weight:500;}
+.back-link{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 14px;border-radius:20px;text-decoration:none;
+  font:500 1rem/1 'Patrick Hand',cursive;color:#f1e6d2;background:rgba(255,255,255,.08);border:1.5px solid rgba(241,230,210,.45);}
+.back-link:hover{background:rgba(255,255,255,.16);}
 
+/* ---------- vỏ sách ---------- */
+.book-wrap:not(.ready) .book-scaler{opacity:0;}   /* chưa tính xong cỡ thì ẩn, tránh chớp */
+.book-wrap{
+  --k:1; --win:0;
+  position:relative;width:100%;aspect-ratio:980/614;
+  perspective:calc(2600px * var(--k));
+}
+.book-scaler{                         /* thu phóng toàn bộ + (chế độ điện thoại) trượt khung nhìn */
+  position:absolute;left:0;top:0;width:980px;height:614px;
+  transform-origin:0 0;transform:scale(var(--k));
+  transform-style:preserve-3d;
+}
 .book{position:relative;width:100%;height:100%;transform-style:preserve-3d;
   filter:drop-shadow(0 30px 50px #00000070);
-  overflow:hidden; /* keep a turned page's back face from poking out past the book's edges */
+  overflow:hidden; /* chặn mặt sau của trang đã lật lòi ra ngoài mép sách */
 }
-
 .page{
   position:absolute;inset:0;
   transform-style:preserve-3d;
@@ -40,8 +84,8 @@ body{
   border-radius:4px;
   box-shadow:2px 0 18px #0006;
   backface-visibility:visible;
-}.page.flipped{transform:rotateY(-180deg);}
-
+}
+.page.flipped{transform:rotateY(-180deg);}
 .page-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;border-radius:4px;}
 .page-front{background:var(--cream);}
 .page-back{background:linear-gradient(120deg,var(--cream2),var(--cream));transform:rotateY(180deg);
@@ -49,35 +93,34 @@ body{
 .page-back:before{content:"";position:absolute;inset:14px;border:1.5px dashed #0002;border-radius:2px;}
 .page-back-mark{font-family:'Patrick Hand',cursive;font-size:1.6rem;color:#0004;}
 
-/* center spine crease for two-page spreads */
+/* nếp gấp gáy sách ở giữa */
 .page-front.spread:after{
   content:"";position:absolute;top:0;bottom:0;left:50%;width:26px;margin-left:-13px;
   background:linear-gradient(90deg, transparent, #0002 45%, #0003 50%, #0002 55%, transparent);
-  pointer-events:none;
+  pointer-events:none;z-index:5;
 }
 .half{position:absolute;top:0;bottom:0;width:50%;padding:5%;overflow:hidden;}
 .half.left{left:0;}
 .half.right{right:0;}
 
-/* nav zones */
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;
-  background:#fffaf2dd;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:1.1rem;box-shadow:2px 2px 0 #0003;z-index:21;transition:opacity .2s;}
-.nav-btn.prev{left:-58px;} .nav-btn.next{right:-58px;}
-.nav-btn.disabled{opacity:.25;pointer-events:none;}
-@media (max-width:760px){.nav-btn.prev{left:-4px;} .nav-btn.next{right:-4px;}}
+/* ---------- vùng chạm để lật (nằm ngoài phần thu phóng, luôn đủ to cho ngón tay) ---------- */
+.zone{position:absolute;top:0;bottom:0;width:16%;padding:0;margin:0;border:0;background:none;cursor:pointer;z-index:30;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.zone-prev{left:0;} .zone-next{right:0;}
+.zone[disabled]{pointer-events:none;}
 
-.book-controls .nav-btn.back-to-main {
-  position: static; /* Ghi đè vị trí tuyệt đối */
-  margin-right: auto; /* Đẩy nút sang trái */
-  width: auto; /* Chiều rộng tự động theo nội dung */
-  height: auto; /* Chiều cao tự động theo nội dung */
-  padding: 8px 16px; /* Điều chỉnh khoảng đệm */
-  border-radius: 20px; /* Bo tròn góc */
-  font-size: 0.9rem; /* Điều chỉnh cỡ chữ */
-  box-shadow: 1px 1px 0 #0003; /* Bóng nhỏ hơn */
-  z-index: 1; /* Đảm bảo nút hiển thị đúng */
-}
+/* ---------- thanh điều hướng dưới ---------- */
+.book-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:104px;min-height:46px;padding:0 18px;
+  font:500 1.1rem/1 'Patrick Hand',cursive;color:var(--burg-dd);cursor:pointer;
+  background:var(--cream);border:2px solid #1b1923;border-radius:26px;box-shadow:3px 3px 0 #0007;
+  touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:transform .12s, box-shadow .12s, opacity .2s;}
+.nav-btn.next{background:var(--gold);}
+.nav-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #0007;}
+.nav-btn:focus-visible,.back-link:focus-visible,.zone:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.nav-btn[disabled]{opacity:.3;pointer-events:none;}
+.book-hint{flex:1;text-align:center;color:rgba(241,230,210,.7);font-size:.95rem;line-height:1.15;}
+.book-hint b{font-weight:400;color:var(--gold);}
 
 @keyframes bookWobble {
   0% { transform: rotateY(0deg) translateY(0px); }
@@ -86,47 +129,126 @@ body{
   75% { transform: rotateY(1deg) translateY(-1px); }
   100% { transform: rotateY(0deg) translateY(0px); }
 }
+.book.wobble-effect{animation:bookWobble 1s ease-in-out infinite;}
 
-.book.wobble-effect {
-  animation: bookWobble 1s ease-in-out infinite;
-}
+/* =====================================================================
+   BÌA SÁCH — hai tông đỏ đô | xanh đạm, xe Mini + Peugeot 408 trên đường đua
+   (nội dung chính nằm trong dải giữa 460px để chế độ điện thoại vẫn thấy đủ)
+   ===================================================================== */
+.cover{background:#2a0c14;color:var(--cream);display:flex;align-items:center;justify-content:center;}
+.cover-bg{position:absolute;inset:0;display:flex;}
+.cover-bg i{flex:1;display:block;}
+.cover-bg .l{background:
+    linear-gradient(135deg,rgba(255,255,255,.07) 25%,transparent 25%) -14px 0/28px 28px,
+    linear-gradient(225deg,rgba(255,255,255,.07) 25%,transparent 25%) -14px 0/28px 28px,
+    linear-gradient(315deg,rgba(0,0,0,.16) 25%,transparent 25%) 0 0/28px 28px,
+    linear-gradient(45deg,rgba(0,0,0,.16) 25%,transparent 25%) 0 0/28px 28px,
+    linear-gradient(160deg,#8a2a3d,#4d1220);}
+.cover-bg .r{background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.14) 0 2px,transparent 2px 20px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 2px,transparent 2px 20px),
+    linear-gradient(200deg,#a9c3dc,#6f93b8);}
+.cover-foil{position:absolute;inset:16px;border:2px solid var(--gold);border-radius:6px;pointer-events:none;
+  box-shadow:inset 0 0 0 6px transparent,inset 0 0 0 8px rgba(217,184,114,.55);}
+.cover-spine{position:absolute;left:50%;top:16px;bottom:16px;width:12px;margin-left:-6px;pointer-events:none;
+  border-left:2px solid var(--gold);border-right:2px solid var(--gold);opacity:.85;}
+.cover-shine{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.cover-shine:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-30%;width:18%;transform:skewX(-18deg);
+  background:linear-gradient(90deg,transparent,rgba(255,244,214,.28),transparent);animation:shine 6s ease-in-out infinite;}
+@keyframes shine{0%,55%{left:-30%;}100%{left:130%;}}
 
-/* ---------- cover (page 1) ---------- */
-.cover{background:linear-gradient(155deg,var(--dusk),var(--dusk2));color:#efe4d3;
-  display:flex;align-items:center;justify-content:center;}
-.cover-card{position:relative;width:82%;max-width:520px;background:var(--cream);color:var(--ink);
-  padding:8% 8% 10%;border-radius:2px;box-shadow:0 18px 34px #0007;
+.cover-eyebrowbar{position:absolute;left:50%;top:44px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:8px 22px;border-radius:30px;background:rgba(51,9,26,.88);border:1.5px solid var(--gold);box-shadow:0 4px 10px #0005;
+  font:700 15px/1 'Oswald',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);white-space:nowrap;text-indent:.34em;}
+.cover-eyebrowbar .doodle{position:static;width:26px;height:26px;flex:none;}
+
+.cover-card{position:relative;width:420px;margin:-96px 0 0;background:var(--cream);color:var(--ink);
+  padding:26px 30px 34px;border-radius:2px;box-shadow:0 18px 34px #0007;
   clip-path:polygon(2% 4%,18% 0%,36% 3%,54% 0%,72% 3%,90% 0%,100% 5%,98% 96%,84% 100%,66% 97%,48% 100%,30% 97%,12% 100%,0 95%);
 }
-.cover-eyebrow{text-align:center;font-size:.95rem;letter-spacing:.06em;opacity:.75;}
-.cover-title{text-align:center;font-family:'Patrick Hand',cursive;font-weight:700;font-size:clamp(2.6rem,7vw,4.2rem);margin:.2em 0;}
-.cover-sub{text-align:center;font-size:.85rem;opacity:.75;}
+.cover-eyebrow{text-align:center;font:700 1rem/1 'Oswald',sans-serif;letter-spacing:.5em;text-indent:.5em;opacity:.7;margin:0;}
+.cover-title{text-align:center;font-family:'Patrick Hand',cursive;font-weight:700;font-size:4.4rem;line-height:1.1;margin:.12em 0 .06em;}
+.cover-sub{text-align:center;font:500 .8rem/1.2 'Oswald',sans-serif;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;opacity:.75;margin:0;}
 .tape{position:absolute;background:#e9dfc8cc;box-shadow:0 2px 4px #0002;}
 .tape.t1{width:90px;height:26px;top:-14px;left:50%;margin-left:-45px;transform:rotate(-3deg);}
 
-/* ---------- shared page dressing ---------- */
-.kraft-bg{background:
-  repeating-linear-gradient(0deg, #0000, #0000 3px, #0000000a 3px, #0000000a 4px),
-  linear-gradient(160deg,var(--kraft),var(--kraft-dark));
-}
-.check-bg{background:
-  repeating-linear-gradient(0deg, #fff0 0 18px, #c8757f22 18px 20px),
-  repeating-linear-gradient(90deg, #fff0 0 18px, #c8757f22 18px 20px),
-  var(--pink);
-}
-.paper-bg{background:linear-gradient(165deg,#efe4d0,#e4d5b8);}
-.dark-bg{background:linear-gradient(160deg,var(--dusk),var(--dusk2));color:#efe4d3;}
+.cover-num{position:absolute;left:50%;top:50%;width:68px;height:68px;border-radius:50%;background:#fff8ea;border:4px solid var(--burg);
+  box-shadow:0 0 0 3px #fff8ea,0 6px 12px #0006;display:flex;align-items:center;justify-content:center;
+  font:700 2.1rem/1 'Oswald',sans-serif;color:#1b1923;}
+.cover-num.n10{margin:-172px 0 0 -232px;transform:rotate(-9deg);}
+.cover-num.n11{margin:-172px 0 0 164px;transform:rotate(8deg);border-color:var(--blue-dd);}
 
-.page-title{font-family:'Patrick Hand',cursive;font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);margin:0 0 6%;}
+.cover-road{position:absolute;left:16px;right:16px;bottom:16px;height:98px;background:linear-gradient(#37323d,#26222b);overflow:hidden;
+  border-top:3px solid #1b1923;}
+.cover-road:before{content:"";position:absolute;left:-44px;right:-44px;top:0;height:11px;
+  background:repeating-linear-gradient(90deg,var(--cream) 0 22px,#c0283a 22px 44px);animation:roadKerb 1.1s linear infinite;}
+.cover-road:after{content:"";position:absolute;left:-52px;right:-52px;top:62px;height:4px;opacity:.8;
+  background:repeating-linear-gradient(90deg,var(--cream) 0 28px,transparent 28px 56px);animation:roadDash .9s linear infinite;}
+@keyframes roadKerb{to{transform:translateX(-44px);}}
+@keyframes roadDash{to{transform:translateX(-56px);}}
+.cover-cars{position:absolute;left:50%;bottom:50px;width:456px;margin-left:-228px;display:flex;align-items:flex-end;justify-content:center;gap:8px;}
+.cover-cars img{display:block;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.45));}
+.cover-cars .mini{width:216px;animation:carIdle .9s ease-in-out infinite alternate;}
+.cover-cars .p408{width:236px;animation:carIdle .9s ease-in-out -.45s infinite alternate;}
+.cover-cars .heart{position:absolute;left:50%;top:-8px;margin-left:-14px;font-size:1.7rem;line-height:1;color:#ff8fa3;text-shadow:2px 2px 0 var(--burg-dd);
+  animation:beat 1.3s ease-in-out infinite;}
+@keyframes carIdle{from{transform:translateY(0);}to{transform:translateY(1.6px);}}
+@keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+
+/* ---------- nền trang (đỏ đô bên trái · xanh đạm bên phải) ---------- */
+.half.left{background:linear-gradient(160deg,var(--burg),var(--burg-d));color:var(--cream);}
+.half.left.dark-bg{background:linear-gradient(160deg,var(--burg-d),var(--burg-dd));color:var(--cream);}   /* trang 2: tối hơn, có đĩa than */
+.half.left.kraft-bg{background:                                                                            /* trang 3: da ghế lót nệm */
+    linear-gradient(135deg,rgba(255,255,255,.07) 25%,transparent 25%) -14px 0/28px 28px,
+    linear-gradient(225deg,rgba(255,255,255,.07) 25%,transparent 25%) -14px 0/28px 28px,
+    linear-gradient(315deg,rgba(0,0,0,.15) 25%,transparent 25%) 0 0/28px 28px,
+    linear-gradient(45deg,rgba(0,0,0,.15) 25%,transparent 25%) 0 0/28px 28px,
+    linear-gradient(160deg,#862738,var(--burg-d));}
+.half.left.paper-bg{background:                                                                            /* trang 4, 5: sọc đua mảnh */
+    repeating-linear-gradient(90deg,transparent 0 34px,rgba(241,230,210,.07) 34px 36px),
+    linear-gradient(165deg,var(--burg-l),var(--burg-d));}
+
+.half.right{background:linear-gradient(165deg,var(--blue-l),var(--blue));color:var(--blue-dd);}
+.half.right.paper-bg{background:                                                                           /* bản vẽ kỹ thuật (blueprint) */
+    repeating-linear-gradient(0deg,rgba(255,255,255,.2) 0 1px,transparent 1px 22px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 1px,transparent 1px 22px),
+    linear-gradient(165deg,var(--blue-l),var(--blue));}
+.half.right.check-bg{background:                                                                           /* caro gingham xanh */
+    repeating-linear-gradient(0deg,#fff0 0 18px,rgba(44,70,99,.13) 18px 20px),
+    repeating-linear-gradient(90deg,#fff0 0 18px,rgba(44,70,99,.13) 18px 20px),
+    linear-gradient(165deg,#c4d7e8,var(--blue));}
+.half.right.speed-bg{background:                                                                           /* vệt tốc độ ngang */
+    repeating-linear-gradient(0deg,transparent 0 24px,rgba(255,255,255,.22) 24px 26px,transparent 26px 40px),
+    linear-gradient(165deg,var(--blue-l),var(--blue-d));}
+
+/* viền sọc đua dọc mép ngoài trang */
+.half:before{content:"";position:absolute;top:0;bottom:22px;width:11px;pointer-events:none;z-index:0;}
+.half.left:before{left:13px;background:linear-gradient(90deg,var(--cream) 0 3px,transparent 3px 8px,var(--gold) 8px 11px);opacity:.75;}
+.half.right:before{right:13px;background:linear-gradient(90deg,var(--blue-dd) 0 3px,transparent 3px 8px,var(--cream) 8px 11px);opacity:.7;}
+
+/* dải chữ chạy dưới chân trang (như bảng điện tử đường đua) */
+.ticker{position:absolute;left:0;right:0;bottom:0;height:22px;overflow:hidden;pointer-events:none;z-index:1;}
+.ticker:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;
+  background:conic-gradient(var(--c1) 25%,var(--c2) 0 50%,var(--c1) 0 75%,var(--c2) 0) 0 0/5px 5px;opacity:.9;}
+.ticker span{position:absolute;left:0;top:5px;white-space:nowrap;font:700 11px/17px 'Oswald',sans-serif;letter-spacing:.24em;text-transform:uppercase;
+  animation:tick 30s linear infinite;}
+@keyframes tick{to{transform:translateX(-50%);}}
+.half.left .ticker{background:var(--burg-dd);color:var(--gold);--c1:var(--cream);--c2:var(--burg-dd);}
+.half.right .ticker{background:var(--blue-dd);color:#e6eff8;--c1:#e6eff8;--c2:var(--blue-dd);}
+
+/* tiêu đề emoji: cỡ cố định trong hệ thiết kế */
+.page-title{font-family:'Patrick Hand',cursive;font-weight:700;font-size:2.1rem;margin:0 0 6%;position:relative;z-index:2;}
 .page-title.on-dark{color:#efe4d3;}
+.half.left .page-title{color:var(--cream);}
+.half.right .page-title{color:var(--blue-dd);}
 .label-chip{display:inline-block;background:var(--cream);border:1px solid #0002;border-radius:3px;
   padding:3px 10px;font-size:.68rem;letter-spacing:.05em;box-shadow:2px 2px 0 #0002;}
-.quote-card{background:var(--cream);border:1px solid #0001;border-radius:2px;padding:10px 14px;
-  box-shadow:3px 4px 8px #0002;font-size:.82rem;line-height:1.5;max-width:230px;}
-.quote-card b{display:block;font-size:.62rem;letter-spacing:.08em;opacity:.6;margin-bottom:3px;}
+.quote-card{position:absolute;z-index:3;   /* bản gốc thiếu position:absolute nên left/top/right/bottom trong HTML không có tác dụng, thẻ chữ bị chìm sau ảnh */
+  background:var(--cream);color:var(--ink);border:1px solid #0001;border-radius:2px;padding:10px 14px;
+  box-shadow:3px 4px 8px #0003;font-size:.82rem;line-height:1.5;max-width:230px;}
+.quote-card b{display:block;font:700 .62rem/1.2 'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:3px;}
 
-/* photo frames */
-.photo{position:absolute;background:var(--cream);padding:6% 6% 16%;box-shadow:4px 6px 12px #0003;}
+/* khung ảnh */
+.photo{position:absolute;background:var(--cream);padding:6% 6% 16%;box-shadow:4px 6px 12px #0004;}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;background:#00000010;}
 .photo.tilt-1{transform:rotate(-4deg);} .photo.tilt-2{transform:rotate(3deg);}
 .photo.tilt-3{transform:rotate(-2deg);} .photo.tilt-4{transform:rotate(5deg);}
@@ -134,7 +256,7 @@ body{
   background:#e9dfc8cc;box-shadow:0 2px 3px #0002;}
 
 .filmstrip{position:absolute;background:#1c1712;padding:6px;display:flex;flex-direction:column;gap:4px;
-  box-shadow:4px 6px 12px #0004;}
+  box-shadow:4px 6px 12px #0005;}
 .filmstrip .frame{flex:1;background:var(--cream);position:relative;overflow:hidden;}
 .filmstrip .frame img{width:100%;height:100%;object-fit:cover;display:block;}
 .filmstrip .perf{position:absolute;left:-2px;right:-2px;display:flex;justify-content:space-between;padding:0 2px;}
@@ -143,10 +265,10 @@ body{
 
 .vinyl{position:absolute;border-radius:50%;
   background:repeating-radial-gradient(circle, #1c1712 0 3px, #2b241d 3px 6px);
-  box-shadow:0 8px 20px #0005, inset 0 0 0 2px #0003;}
-.vinyl:after{content:"";position:absolute;inset:38%;border-radius:50%;background:var(--maroon);
+  box-shadow:0 8px 20px #0006, inset 0 0 0 2px #0003;}
+.vinyl:after{content:"";position:absolute;inset:38%;border-radius:50%;background:var(--gold);
   box-shadow:inset 0 0 0 2px #0003;}
-.vinyl:before{content:"";position:absolute;inset:47%;border-radius:50%;background:var(--dusk2);}
+.vinyl:before{content:"";position:absolute;inset:47%;border-radius:50%;background:var(--burg-dd);z-index:1;}
 
 .envelope{position:relative;width:78%;margin:0 auto;padding-top:12%;}
 .envelope .flap{position:absolute;top:0;left:0;right:0;height:44%;background:var(--kraft);
@@ -157,139 +279,81 @@ body{
   padding:5% 5% 10%;}
 .envelope .peek img{width:100%;height:100%;object-fit:cover;display:block;}
 
-.ticket{background:var(--kraft-dark);color:var(--cream);padding:8px 14px;border:1.5px dashed var(--cream);
-  border-radius:2px;font-size:.68rem;letter-spacing:.05em;display:inline-block;}
-.ticket b{display:block;font-size:.9rem;letter-spacing:.06em;margin-top:2px;}
+.ticket{background:var(--gold-d);color:var(--burg-dd);padding:8px 14px;border:1.5px dashed var(--burg-dd);
+  border-radius:2px;font:700 .68rem/1.3 'Oswald',sans-serif;letter-spacing:.14em;display:inline-block;box-shadow:2px 3px 6px #0004;text-transform:uppercase;}
+.ticket b{display:block;font-size:.95rem;letter-spacing:.16em;margin-top:2px;}
 
-/* ---------- hand-drawn doodles (SVG, jittered stroke) ---------- */
+/* ---------- doodle vẽ tay (SVG, nét rung) ---------- */
 .doodle{position:absolute;pointer-events:none;}
 .doodle svg{width:100%;height:100%;overflow:visible;}
-.doodle path,.doodle circle,.doodle ellipse{filter:url(#sketchy);}
+.doodle path,.doodle circle,.doodle ellipse,.doodle rect,.doodle line{filter:url(#sketchy);}
+.on-burg{color:var(--gold);}
+.on-blue{color:var(--blue-dd);}
+.mark{opacity:.13;}
+.doodle.halo svg{filter:drop-shadow(0 0 1.5px var(--cream)) drop-shadow(0 0 3px rgba(241,230,210,.9));}
+.heartpop{position:absolute;left:50%;bottom:31%;margin-left:-16px;font-size:2rem;line-height:1;color:#c0283a;text-shadow:2px 2px 0 var(--cream);pointer-events:none;animation:beat 1.3s ease-in-out infinite;}
 .sparkle{animation:twinkle 2.6s ease-in-out infinite;}
 .sway{animation:sway 4.5s ease-in-out infinite;transform-origin:50% 90%;}
 .float{animation:float 5s ease-in-out infinite;}
+.spin{animation:spin 22s linear infinite;}
+.spin.slow{animation-duration:40s;} .spin.rev{animation-direction:reverse;}
+.wave{animation:wave 1.4s ease-in-out infinite alternate;transform-origin:12% 92%;}
+.drive{animation:drive 9s linear infinite;}
 @keyframes twinkle{0%,100%{opacity:.35;transform:scale(.85);} 50%{opacity:1;transform:scale(1.1);}}
 @keyframes sway{0%,100%{transform:rotate(-4deg);} 50%{transform:rotate(4deg);}}
 @keyframes float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes wave{from{transform:rotate(-7deg) skewY(-3deg);}to{transform:rotate(6deg) skewY(3deg);}}
+@keyframes drive{0%{transform:translateX(-120%);}100%{transform:translateX(560%);}}
+.needle{transform-origin:12px 18px;animation:needle 3.4s ease-in-out infinite;}
+@keyframes needle{0%,100%{transform:rotate(-52deg);}35%{transform:rotate(38deg);}60%{transform:rotate(14deg);}80%{transform:rotate(44deg);}}
 
-@media (max-width:600px){
-  body {
-    padding: 15px;
-  }
-  .book-wrap{
-    width: min(98vw, 980px); /* Tăng chiều rộng trên mobile */
-    aspect-ratio:9/13;
-  }
-  .book-controls {
-    top: -38px; /* Điều chỉnh vị trí điều khiển */
-    font-size: 0.75rem;
-  }
-  .book-controls .count {
-    font-size: 1.1rem;
-  }
-  .nav-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
-  }
-  .nav-btn.prev{left:-4px;} .nav-btn.next{right:-4px;}
+/* ---------- sticker ô tô (xe thật của hai bạn) ---------- */
+.sticker{position:absolute;pointer-events:none;filter:drop-shadow(3px 5px 5px rgba(0,0,0,.35));}
+.sticker img{display:block;width:100%;height:auto;}
 
-  .half{width:100%;height:50%;left:0!important;right:0!important;padding:8%;}
-  .half.right{top:50%;} .half.left{top:0;}
-  .page-front.spread:after{left:0;right:0;top:50%;width:auto;height:22px;margin:0;
-    background:linear-gradient(180deg, transparent, #0002 45%, #0003 50%, #0002 55%, transparent);}
+/* ---------- vết bánh xe, tem, dấu mộc ---------- */
+.stamp{position:absolute;pointer-events:none;border:2.5px solid currentColor;border-radius:6px;padding:4px 10px 3px;
+  font:700 .8rem/1.15 'Oswald',sans-serif;letter-spacing:.2em;text-transform:uppercase;text-align:center;opacity:.8;transform:rotate(-8deg);}
+.stamp small{display:block;font-size:.55rem;letter-spacing:.32em;opacity:.85;}
+.tire-track{position:absolute;pointer-events:none;height:26px;opacity:.16;
+  background:repeating-linear-gradient(90deg,currentColor 0 5px,transparent 5px 12px);
+  -webkit-mask:linear-gradient(180deg,#000 0 22%,transparent 22% 78%,#000 78%);mask:linear-gradient(180deg,#000 0 22%,transparent 22% 78%,#000 78%);}
+.finishline{position:absolute;left:0;right:0;height:22px;pointer-events:none;overflow:hidden;
+  background:conic-gradient(var(--cream) 25%,#1b1923 0 50%,var(--cream) 0 75%,#1b1923 0) 0 0/11px 11px;border-top:2px solid #1b1923;opacity:.92;}
 
-  /* Cover adjustments */
-  .cover-card {
-    width: 90%;
-    padding: 10% 8% 12%;
-  }
-  .cover-eyebrow {
-    font-size: 0.8rem;
-  }
-  .cover-title {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-  }
-  .cover-sub {
-    font-size: 0.75rem;
-  }
-  .tape.t1 {
-    width: 70px;
-    height: 20px;
-    top: -10px;
-  }
-
-  /* Page content adjustments */
-  .page-title {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    margin-bottom: 4%;
-  }
-  .quote-card {
-    font-size: 0.75rem;
-    padding: 8px 12px;
-    max-width: 100%; /* Allow quote cards to take full width */
-  }
-  .label-chip {
-    font-size: 0.6rem;
-    padding: 2px 8px;
-  }
-  .photo {
-    padding: 5% 5% 14%;
-  }
-  .photo .washi {
-    width: 50px;
-    height: 18px;
-    margin-left: -25px;
-  }
-  .filmstrip {
-    padding: 4px;
-    gap: 3px;
-  }
-  .filmstrip .perf span {
-    width: 4px;
-    height: 4px;
-  }
-  .vinyl {
-    box-shadow:0 6px 15px #0005, inset 0 0 0 1px #0003;
-  }
-  .vinyl:after {
-    inset: 35%;
-  }
-  .vinyl:before {
-    inset: 45%;
-  }
-  .envelope {
-    width: 90%;
-  }
-  .ticket {
-    padding: 6px 10px;
-    font-size: 0.6rem;
-  }
-  .ticket b {
-    font-size: 0.8rem;
-  }
+/* =====================================================================
+   CHẾ ĐỘ ĐIỆN THOẠI DỌC: hiển thị TỪNG TRANG một ở cỡ đọc được
+   (trang chủ yếu giữ nguyên bố cục, khung nhìn trượt giữa trang trái/phải/bìa)
+   ===================================================================== */
+.phone{--chrome:196px;}
+.phone .stage{width:min(94vw,calc((100vh - var(--chrome)) * .798));}
+@supports (height:100svh){
+  .phone .stage{width:min(94vw,calc((100svh - var(--chrome)) * .798));}
 }
+.phone .book-wrap{aspect-ratio:490/614;overflow:hidden;filter:drop-shadow(0 18px 26px #00000080);border-radius:4px;}
+.phone .book{filter:none;}
+.phone .book-scaler{transform:translateX(calc(var(--win,0) * var(--k,1) * -1px)) scale(var(--k,1));
+  transition:transform .5s cubic-bezier(.65,0,.35,1);}
+.phone .book-scaler.no-t{transition:none;}
+.phone .zone{width:34%;}
+.phone .quote-card{font-size:.95rem;line-height:1.4;}
+.phone .page-title{font-size:2.2rem;}
+.phone .book-controls .title{display:none;}
+.phone .book-nav .nav-btn{flex:1;min-height:52px;font-size:1.2rem;}
+.phone .book-hint{display:none;}
+
+/* màn hình ngang thấp (điện thoại xoay ngang): gọn thanh điều khiển */
+@media (max-height:480px){
+  :root{--chrome:70px;}
+  .book-nav{display:none;}
+  .book-controls{min-height:28px;}
+  .stage{gap:6px;}
+}
+
 @media (prefers-reduced-motion: reduce){
-  .sparkle,.sway,.float{animation:none;}
+  .sparkle,.sway,.float,.spin,.wave,.drive,.needle,.ticker span,.cover-shine:after,.cover-road:before,.cover-road:after,
+  .cover-cars img,.cover-cars .heart,.book.wobble-effect{animation:none;}
   .page{transition:none;}
-}
-
-.click-area {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 15%; /* Chiều rộng của vùng click */
-  cursor: pointer;
-  z-index: 20;
-  opacity: 0; /* Giữ cho nó vô hình */
-}
-.left-click-area {
-  left: 0;
-}
-.right-click-area {
-  right: 0;
-}
-
-.book-controls .nav-btn.back-to-main {
-  text-decoration: none; /* Bỏ gạch chân cho nút quay lại */
+  .phone .book-scaler{transition:none;}
 }
