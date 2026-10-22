@@ -61,51 +61,12 @@ function hiDpiCanvas(id){
   return c;
 }
 
-const rcJar=rough.canvas(hiDpiCanvas('jarCanvas'));
-rcJar.rectangle(18,40,134,160,{stroke:'#3d3a4a',strokeWidth:2.4,roughness:2.4,fill:'#ffffff',fillStyle:'solid',fillWeight:.5});
-rcJar.rectangle(45,16,80,26,{stroke:'#3d3a4a',strokeWidth:2.2,roughness:2.2,fill:'#c99a63',fillStyle:'hachure',hachureGap:4});
-rcJar.line(18,40,45,42);rcJar.line(152,40,125,42);
-
 const rcBox=rough.canvas(hiDpiCanvas('boxCanvas'));
 const boxCx=90,boxCy=52;
 rcBox.polygon([[boxCx-72,boxCy-4],[boxCx-14,boxCy-44],[boxCx-8,boxCy+2],[boxCx-58,boxCy+26]],{stroke:'#3d3a4a',strokeWidth:2.2,roughness:2.1,fill:'#e3a361',fillStyle:'hachure',hachureGap:4});
 rcBox.polygon([[boxCx+72,boxCy-4],[boxCx+14,boxCy-44],[boxCx+8,boxCy+2],[boxCx+58,boxCy+26]],{stroke:'#3d3a4a',strokeWidth:2.2,roughness:2.1,fill:'#e3a361',fillStyle:'hachure',hachureGap:4});
 rcBox.polygon([[boxCx-56,boxCy+18],[boxCx+56,boxCy+18],[boxCx+40,boxCy+96],[boxCx-40,boxCy+96]],{stroke:'#3d3a4a',strokeWidth:2.4,roughness:2.2,fill:'#d9a65c',fillStyle:'hachure',hachureGap:5});
 rcBox.line(boxCx-56,boxCy+18,boxCx+56,boxCy+18);
-
-// ---------- wish jar ----------
-const wishes=[
-  "You're the best version of \"home\" I've ever known.",
-  "Every day with you feels like a page from my favorite story.",
-  "I fall for you a little more with every sunrise.",
-  "You're my favorite hello and my hardest goodbye.",
-  "With you, ordinary days become memories.",
-  "Thank you for choosing me, again and again."
-];
-const jar=document.getElementById('jar');
-for(let i=0;i<10;i++){
-  const s=document.createElement('div');
-  s.className='scroll';
-  s.style.left=8+Math.random()*118+'px';
-  s.style.background=['#ffb3c6','#c9e4ff','#ffe08a'][i%3];
-  jar.appendChild(s);
-}
-jar.onclick=()=>{
-  const randomWishIndex = Math.floor(Math.random()*wishes.length);
-  const wishText = wishes[randomWishIndex];
-
-  // Create a flying scroll element
-  const flyingScroll = document.createElement('div');
-  flyingScroll.className = 'scroll-flying';
-  flyingScroll.style.background = ['#ffb3c6','#c9e4ff','#ffe08a'][randomWishIndex % 3];
-  jar.appendChild(flyingScroll);
-
-  // Listen for animation end to update wishNote and remove flying scroll
-  flyingScroll.addEventListener('animationend', () => {
-    document.getElementById('wishNote').textContent = wishText;
-    flyingScroll.remove();
-  }, { once: true });
-};
 
 // ---------- photo pinning: ảnh rơi ra khỏi hộp, kéo lên dây phơi ----------
 const box=document.getElementById('box');
