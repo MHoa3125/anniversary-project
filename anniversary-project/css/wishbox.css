@@ -1,0 +1,49 @@
+/* ===== Garage Wishes: máy in giấy bấm giờ — bấm nút đỏ, giấy chạy ra từng nấc, hiện 1 lời nhắn ngẫu nhiên ===== */
+#s4{text-align:center;font-family:'Patrick Hand',cursive;}
+#s4 .title{font-size:clamp(2.1rem,9vw,2.8rem);}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+.pr-scene{position:relative;width:min(340px,100%);display:flex;flex-direction:column;align-items:center;}
+
+/* ---- khu vực giấy chạy ra ---- */
+.pr-area{position:relative;width:100%;height:300px;overflow:hidden;}   /* giấy chỉ được hiện phía trên mặt máy, không lòi xuống dưới */
+.pr-hint{position:absolute;left:50%;top:50%;width:236px;margin:0;padding:26px 16px;transform:translate(-50%,-50%);
+  border:2px dashed rgba(61,58,74,.38);border-radius:6px;font-size:1.3rem;line-height:1.25;opacity:.88;transition:opacity .25s;}
+.pr-hint.off{opacity:0;}
+.pr-paperhost{position:absolute;left:50%;bottom:0;width:250px;margin-left:-125px;z-index:1;pointer-events:none;
+  filter:drop-shadow(0 5px 6px rgba(0,0,0,.28));}
+
+/* ---- tờ giấy in (giấy máy in kim có lỗ kéo hai bên + mép xé răng cưa) ---- */
+.pr-paper{position:absolute;left:0;right:0;bottom:0;padding:20px 28px 24px;text-align:left;color:#2b2830;
+  font-family:'Courier Prime','Courier New',monospace;
+  background:
+    radial-gradient(circle at 7px 7px,#c9c4b3 2.6px,transparent 3.3px) left top/14px 14px repeat-y,
+    radial-gradient(circle at 7px 7px,#c9c4b3 2.6px,transparent 3.3px) right top/14px 14px repeat-y,
+    linear-gradient(#fffdf6,#f4eedd);
+  clip-path:polygon(0 7px,6.25% 0,12.5% 7px,18.75% 0,25% 7px,31.25% 0,37.5% 7px,43.75% 0,50% 7px,56.25% 0,62.5% 7px,68.75% 0,75% 7px,81.25% 0,87.5% 7px,93.75% 0,100% 7px,100% 100%,0 100%);}
+.pr-head{display:flex;justify-content:space-between;font:700 .7rem/1 'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8c0f1d;}
+.pr-rule{border-top:2px dashed #9a968a;margin:9px 0;}
+.pr-msg{margin:0;font-size:1.04rem;line-height:1.5;font-weight:700;overflow-wrap:break-word;}
+.pr-foot{text-align:center;font:700 .6rem/1 'Oswald',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#5a5750;}
+
+/* ---- máy in ---- */
+.pr-printer{position:relative;z-index:3;width:270px;height:140px;margin-top:-26px;padding:0;border:0;background:none;cursor:pointer;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.pr-printer:focus-visible{outline:3px solid #8c0f1d;outline-offset:4px;border-radius:10px;}
+.pr-body{position:absolute;left:0;top:0;display:block;}
+.pr-led{position:absolute;left:24px;top:56px;width:92px;height:34px;display:flex;align-items:center;justify-content:center;
+  font:700 .85rem/1 'Oswald',sans-serif;letter-spacing:.18em;color:#ffb347;text-shadow:0 0 6px rgba(255,170,60,.85);}
+.pr-printer.printing .pr-led{animation:prBlink .26s steps(2) infinite;}
+.pr-btn{position:absolute;left:176px;top:58px;width:56px;height:56px;border-radius:50%;border:3px solid #3d3a4a;
+  background:radial-gradient(circle at 36% 30%,#ff7a7a,#d2222d 55%,#8c0f1d);
+  box-shadow:0 5px 0 #5b0c17,0 8px 10px rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s;}
+.pr-printer:active .pr-btn,.pr-printer.printing .pr-btn{transform:translateY(4px);box-shadow:0 1px 0 #5b0c17,0 3px 4px rgba(0,0,0,.35);}
+.pr-cap{position:absolute;left:170px;top:119px;width:68px;text-align:center;font:700 .6rem/1 'Oswald',sans-serif;letter-spacing:.3em;text-indent:.3em;color:#f1e6d2;pointer-events:none;}
+.pr-printer.printing .pr-body{animation:prVib .07s linear infinite;}
+@keyframes prVib{0%,100%{transform:translateX(0);}50%{transform:translateX(.9px);}}
+@keyframes prBlink{50%{opacity:.25;}}
+
+@media (max-width:600px){ #s4{padding-bottom:110px;} }
+@media (prefers-reduced-motion:reduce){
+  .pr-printer.printing .pr-body,.pr-printer.printing .pr-led{animation:none;}
+}
