@@ -1,0 +1,120 @@
+/* ===== Secret Memory: dây phơi dàn đều + ô dán sáng lên khi ảnh đến gần + kẹp bật xuống
+   + kết thúc: dây đung đưa, bóng đèn sáng từng bóng, chạm ảnh để phóng to ===== */
+#s6{font-family:'Patrick Hand',cursive;}
+
+/* ---------- dây phơi: desktop = 1 dây, 4 ô dàn đều ---------- */
+.mem-line{position:relative;width:100%;max-width:680px;height:206px;margin:8px 0 6px;transform-origin:50% 0;}
+.mem-rope{position:absolute;left:0;right:0;height:3px;background:var(--ink);border-radius:2px;}
+.mem-rope-a{top:12px;}
+.mem-rope-b{display:none;}
+
+.mem-slot{position:absolute;top:0;width:118px;height:152px;transform:translateX(-50%);}
+.mem-slot[data-zone="0"]{left:12.5%;}
+.mem-slot[data-zone="1"]{left:37.5%;}
+.mem-slot[data-zone="2"]{left:62.5%;}
+.mem-slot[data-zone="3"]{left:87.5%;}
+
+.mem-peg{position:absolute;top:-4px;left:50%;width:16px;height:34px;margin-left:-8px;z-index:3;
+  background:var(--wood);border:1px solid var(--ink);border-radius:3px;transform-origin:50% 25%;}
+.mem-drop{position:absolute;left:3px;right:3px;top:20px;bottom:0;border:2px dashed #0003;border-radius:3px;
+  transition:border-color .15s,background .15s,box-shadow .15s,transform .15s;}
+.mem-slot.hot .mem-drop{border-color:#ff8fa3;border-style:solid;background:rgba(255,143,163,.28);
+  box-shadow:0 0 0 4px rgba(255,143,163,.35),0 0 18px rgba(255,143,163,.6);transform:scale(1.05);}
+.mem-slot.filled .mem-drop{border-color:transparent;background:none;box-shadow:none;}
+.mem-slot.snap .mem-peg{animation:pegSnap .38s cubic-bezier(.3,1.6,.5,1);}
+@keyframes pegSnap{0%{transform:rotate(-16deg) translateY(-8px);}55%{transform:rotate(4deg) translateY(3px);}100%{transform:none;}}
+
+/* ---------- ảnh đã ghim: to hơn, treo lủng lẳng từ kẹp ---------- */
+.mem-slot .pol-mini.placed{
+  position:absolute;left:50%;top:22px;width:112px;height:130px;margin:0;padding:6px 6px 24px;z-index:1;
+  cursor:zoom-in;touch-action:manipulation;transform-origin:50% 0;
+  transform:translateX(-50%) rotate(var(--hang,0deg));
+  box-shadow:3px 6px 10px rgba(0,0,0,.28);
+  animation:hangIn .9s ease-out both, hangSway 4.4s ease-in-out .9s infinite;
+  animation-delay:0s, calc(.9s + var(--sd,0s));
+}
+.mem-slot .pol-mini.placed:focus-visible{outline:3px solid #ff8fa3;outline-offset:3px;}
+@keyframes hangIn{
+  0%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) + 16deg));}
+  30%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) - 10deg));}
+  55%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) + 5deg));}
+  80%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) - 2deg));}
+  100%{transform:translateX(-50%) rotate(var(--hang,0deg));}}
+@keyframes hangSway{
+  0%,100%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) - 1.3deg));}
+  50%{transform:translateX(-50%) rotate(calc(var(--hang,0deg) + 1.3deg));}}
+
+/* ---------- bóng đèn dọc dây (sáng từng bóng khi dán đủ 4 ảnh) ---------- */
+.mem-bulb{position:absolute;top:3px;width:9px;height:13px;margin-left:-4px;z-index:1;border-radius:50% 50% 55% 55%;
+  background:#c7ced6;border:1px solid rgba(61,58,74,.55);transition:background .2s;}
+.mem-bulb:before{content:"";position:absolute;left:50%;top:-4px;width:5px;height:4px;margin-left:-2.5px;background:#3d3a4a;border-radius:1px;}
+.mem-line.done .mem-bulb{animation:bulbOn .3s ease forwards,bulbTw 1.5s ease-in-out infinite alternate;
+  animation-delay:calc(var(--i) * .09s),calc(var(--i) * .09s + .3s);}
+@keyframes bulbOn{to{background:var(--bc);border-color:rgba(61,58,74,.35);box-shadow:0 0 9px 3px var(--bc);}}
+@keyframes bulbTw{from{filter:brightness(1);}to{filter:brightness(1.25);}}
+
+/* cả dây đung đưa nhẹ khi hoàn thành */
+.mem-line.done{animation:memSway 5s ease-in-out infinite;}
+@keyframes memSway{0%,100%{transform:rotate(-.6deg);}50%{transform:rotate(.6deg);}}
+
+.mem-tip{margin:0 0 6px;height:1.5em;font-size:1.15rem;opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;}
+.mem-tip.show{opacity:.9;transform:none;}
+
+/* ---------- phóng to ảnh ---------- */
+.mem-lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:rgba(27,25,35,.74);opacity:0;pointer-events:none;transition:opacity .25s;-webkit-tap-highlight-color:transparent;}
+.mem-lb.open{opacity:1;pointer-events:auto;}
+.mem-lb figure{margin:0;max-width:min(90vw,520px);padding:12px 12px 20px;background:#fff4e6;border-radius:3px;
+  box-shadow:0 22px 44px rgba(0,0,0,.55);transform:scale(.6) rotate(-4deg);transition:transform .38s cubic-bezier(.3,1.3,.5,1);}
+.mem-lb.open figure{transform:scale(1) rotate(-1.2deg);}
+.mem-lb img{display:block;max-width:100%;max-height:68vh;margin:0 auto;object-fit:contain;background:#00000012;}
+.mem-lb figcaption{margin-top:12px;min-height:1.4em;text-align:center;font-size:1.35rem;line-height:1.3;color:#3d3a4a;}
+.mem-lb figcaption:empty{display:none;}
+.mem-lb figure:has(figcaption:empty){padding-bottom:36px;}
+.mem-lb-close{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;width:46px;height:46px;border-radius:50%;
+  font-size:1.6rem;line-height:1;color:#3d3a4a;background:#fff4e6;border:2px solid #3d3a4a;box-shadow:2px 2px 0 #0007;cursor:pointer;touch-action:manipulation;}
+
+/* ---------- điện thoại: lưới 2×2, 2 dây ---------- */
+@media (max-width:600px){
+  /* điện thoại: hộp → khay ảnh → dây phơi, để ảnh vừa rơi ra là kéo xuống dán ngay (không phải kéo cả màn hình) */
+  #s6 .box-wrap{order:1;margin-top:6px;}
+  #s6 .polaroids{order:2;margin-top:12px;min-height:96px;}
+  #s6 .mem-line{order:3;margin-top:14px;}
+  #s6 .mem-tip{order:4;}
+  .mem-line{max-width:330px;height:306px;}
+  .mem-rope-b{display:block;top:162px;}
+  .mem-slot{height:148px;}
+  .mem-slot[data-zone="0"],.mem-slot[data-zone="1"]{top:0;}
+  .mem-slot[data-zone="2"],.mem-slot[data-zone="3"]{top:150px;}
+  .mem-slot[data-zone="0"],.mem-slot[data-zone="2"]{left:27%;}
+  .mem-slot[data-zone="1"],.mem-slot[data-zone="3"]{left:73%;}
+  .mem-slot .pol-mini.placed{width:108px;height:124px;}
+  #s6{padding-bottom:110px;}
+}
+@media (max-width:360px){
+  .mem-slot{width:108px;}
+  .mem-slot .pol-mini.placed{width:100px;height:116px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .mem-slot .pol-mini.placed,.mem-line.done,.mem-line.done .mem-bulb,.mem-slot.snap .mem-peg{animation:none !important;}
+  .mem-slot .pol-mini.placed{transform:translateX(-50%) rotate(var(--hang,0deg));}
+  .mem-line.done .mem-bulb{background:var(--bc);box-shadow:0 0 6px 2px var(--bc);}
+  .mem-lb figure,.mem-lb,.mem-tip{transition-duration:.01s;}
+}
+
+/* ===== Hộp đựng ảnh vintage (vẽ bằng rough.js trong script.js) ===== */
+#s6 .box-wrap{width:220px;height:172px;margin-top:54px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+#s6 .box-wrap:focus-visible{outline:3px solid #8c0f1d;outline-offset:6px;border-radius:10px;}
+.box-wrap .box-body{left:0;top:0;z-index:1;}
+.box-wrap .box-lid{left:-8px;top:2px;z-index:2;transform-origin:7% 90%;transition:transform .5s cubic-bezier(.34,1.4,.64,1);}
+.box-wrap.open .box-lid{transform:translate(-16px,-12px) rotate(-14deg);animation:none;}
+.box-wrap:not(.open) .box-lid{animation:lidHint 4.4s ease-in-out infinite;}   /* thỉnh thoảng nắp hé nhẹ để mời bấm */
+@keyframes lidHint{0%,78%,100%{transform:none;}84%{transform:translate(-3px,-6px) rotate(-5deg);}90%{transform:translate(0,-1px) rotate(-1deg);}}
+.box-wrap.shake{animation:boxShake .38s ease;}
+@keyframes boxShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px) rotate(-1deg);}45%{transform:translateX(5px) rotate(1deg);}70%{transform:translateX(-3px);}}
+.box-plate{position:absolute;left:52px;top:88px;width:116px;height:44px;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;white-space:nowrap;
+  font:700 .78rem/1.1 'Oswald',sans-serif;letter-spacing:.2em;text-indent:.2em;color:#5a1624;pointer-events:none;}
+.box-plate small{font-size:.6rem;letter-spacing:.34em;opacity:.7;margin-top:2px;}
+.box-wrap .box-label{z-index:4;bottom:-10px;transition:opacity .3s;}
+.box-wrap.open .box-label{opacity:0;pointer-events:none;}
+@media (prefers-reduced-motion:reduce){ .box-wrap:not(.open) .box-lid,.box-wrap.shake{animation:none;} .box-wrap .box-lid{transition-duration:.01s;} }

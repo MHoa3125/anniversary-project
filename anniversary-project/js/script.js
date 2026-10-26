@@ -61,31 +61,85 @@ function hiDpiCanvas(id){
   return c;
 }
 
-const rcBox=rough.canvas(hiDpiCanvas('boxCanvas'));
-const boxCx=90,boxCy=52;
-rcBox.polygon([[boxCx-72,boxCy-4],[boxCx-14,boxCy-44],[boxCx-8,boxCy+2],[boxCx-58,boxCy+26]],{stroke:'#3d3a4a',strokeWidth:2.2,roughness:2.1,fill:'#e3a361',fillStyle:'hachure',hachureGap:4});
-rcBox.polygon([[boxCx+72,boxCy-4],[boxCx+14,boxCy-44],[boxCx+8,boxCy+2],[boxCx+58,boxCy+26]],{stroke:'#3d3a4a',strokeWidth:2.2,roughness:2.1,fill:'#e3a361',fillStyle:'hachure',hachureGap:4});
-rcBox.polygon([[boxCx-56,boxCy+18],[boxCx+56,boxCy+18],[boxCx+40,boxCy+96],[boxCx-40,boxCy+96]],{stroke:'#3d3a4a',strokeWidth:2.4,roughness:2.2,fill:'#d9a65c',fillStyle:'hachure',hachureGap:5});
-rcBox.line(boxCx-56,boxCy+18,boxCx+56,boxCy+18);
+// ---------- hộp đựng ảnh vintage (rough.js): vỏ đỏ đô, góc sắt vàng, nhãn kem, nắp có khóa gài ----------
+function drawPhotoBox(){
+  const INK='#3d3a4a', GOLD='#d9b872', BURG='#6e1f2e', BURG_L='#a23a50', CREAM='#f1e6d2';
+  const body=hiDpiCanvas('boxCanvas'), lid=hiDpiCanvas('boxLid');
+  const b=rough.canvas(body), l=rough.canvas(lid);
+  // bóng đổ dưới đáy hộp
+  const c=body.getContext('2d'); c.save(); c.fillStyle='rgba(0,0,0,.18)'; c.beginPath(); c.ellipse(110,166,98,6,0,0,Math.PI*2); c.fill(); c.restore();
+  // ruột hộp tối + mấy tấm ảnh lấp ló (thấy khi nắp mở)
+  b.rectangle(14,44,192,22,{stroke:'none',fill:'#2a0c14',fillStyle:'solid'});
+  [[[34,62],[38,30],[78,34],[74,62],'#e8b9be'],[[88,62],[90,24],[132,26],[130,62],'#bdd2e6'],[[142,62],[148,32],[186,30],[184,62],'#ffe08a']].forEach(([p1,p2,p3,p4,col])=>{
+    b.polygon([p1,p2,p3,p4],{stroke:INK,strokeWidth:1.8,roughness:1,fill:CREAM,fillStyle:'solid'});
+    const m=(a,z)=>[a[0]+(z[0]-a[0])*.18,a[1]+(z[1]-a[1])*.18];
+    b.polygon([[p1[0]+5,p1[1]-12],[p2[0]+4,p2[1]+6],[p3[0]-4,p3[1]+6],[p4[0]-5,p4[1]-12]],{stroke:'none',fill:col,fillStyle:'solid'});
+  });
+  // mặt trước hộp
+  b.rectangle(10,60,200,104,{stroke:'none',fill:BURG,fillStyle:'solid'});
+  b.rectangle(10,60,200,104,{stroke:INK,strokeWidth:2.4,roughness:1.5,fill:BURG_L,fillStyle:'hachure',hachureGap:6,fillWeight:1});
+  b.line(26,76,194,76,{stroke:GOLD,strokeWidth:2.4,roughness:1});            // sọc vàng
+  b.line(26,150,194,150,{stroke:GOLD,strokeWidth:2.4,roughness:1});
+  [[10,60],[196,60],[10,150],[196,150]].forEach(([x,y])=>b.rectangle(x,y,14,14,{stroke:INK,strokeWidth:1.8,roughness:.8,fill:GOLD,fillStyle:'solid'}));   // góc sắt
+  b.rectangle(52,88,116,44,{stroke:INK,strokeWidth:2,roughness:1,fill:CREAM,fillStyle:'solid'});                                                       // nhãn kem
+  // nắp hộp
+  l.rectangle(8,24,220,38,{stroke:'none',fill:'#7d2434',fillStyle:'solid'});
+  l.rectangle(8,24,220,38,{stroke:INK,strokeWidth:2.4,roughness:1.5,fill:'#b24a60',fillStyle:'hachure',hachureGap:6,fillWeight:1});
+  l.rectangle(8,24,220,9,{stroke:INK,strokeWidth:2,roughness:1,fill:GOLD,fillStyle:'solid'});
+  l.rectangle(18,38,200,18,{stroke:GOLD,strokeWidth:1.8,roughness:1});
+  l.rectangle(106,46,24,20,{stroke:INK,strokeWidth:2,roughness:.9,fill:GOLD,fillStyle:'solid'});       // khóa gài
+  l.circle(118,55,5,{stroke:INK,strokeWidth:1.6,roughness:.6,fill:'#4d1220',fillStyle:'solid'});
+}
+drawPhotoBox();
 
 // ---------- photo pinning: ảnh rơi ra khỏi hộp, kéo lên dây phơi ----------
 const box=document.getElementById('box');
 const polaroids=document.getElementById('polaroids');
+const memLine=document.getElementById('memLine');
+const memTip=document.getElementById('memTip');
 let spawned=false;
 const filled={};
 
 // filenames of the 4 photos that fall out of the box — replace these files in /images to use your own photos
 const boxPhotos=['images/photo4.jpg','images/photo5.jpg','images/photo6.jpg','images/photo7.png'];
+// Chú thích hiện dưới ảnh khi chạm để phóng to (theo đúng thứ tự 4 ảnh ở trên). Để '' nếu không cần chú thích.
+const CAPTIONS=['','','',''];
+
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const buzz = ms => { try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(_){} };   // rung nhẹ trên điện thoại
+
+// bóng đèn dọc dây (tắt sẵn, sáng từng bóng khi dán đủ 4 ảnh)
+(function buildBulbs(){
+  const colors=['#ff8fa3','#ffe08a','#9fd3f2','#b6f0d1','#ff6f6f'];
+  let i=0;
+  document.querySelectorAll('.mem-rope').forEach(rope=>{
+    for(let k=0;k<14;k++){
+      const b=document.createElement('i');
+      b.className='mem-bulb';
+      b.style.left=((k+.5)/14*100)+'%';
+      b.style.setProperty('--i',i++);
+      b.style.setProperty('--bc',colors[k%colors.length]);
+      rope.appendChild(b);
+    }
+  });
+})();
 
 /*
   Kéo thả dùng Pointer Events: 1 bộ code chạy cho cả chuột, ngón tay và bút.
-  (Bản cũ dùng touchmove gắn ở document -> trình duyệt điện thoại coi là "passive",
-   preventDefault() bị bỏ qua nên trang cuộn theo và việc kéo bị hủy.)
   CSS .pol-mini { touch-action:none } báo trình duyệt đừng cuộn khi chạm vào ảnh.
   Ảnh được dịch chuyển bằng transform nên không rời khỏi bố cục -> các ảnh khác không bị nhảy vị trí.
 */
 let drag = null; // { el, id, startX, startY, lastX, lastY, sx0, sy0 }
 let autoScrollRAF = 0;
+let hotZone = null;
+
+// ô dây phơi gần ảnh nhất sẽ "sáng lên" để báo sẽ dán vào đâu
+function setHot(z){
+  if(z === hotZone) return;
+  if(hotZone) hotZone.classList.remove('hot');
+  hotZone = z;
+  if(z){ z.classList.add('hot'); buzz(8); }
+}
 
 function applyDrag(){
   if(!drag) return;
@@ -94,6 +148,7 @@ function applyDrag(){
   const dy = (drag.lastY + scrollY) - (drag.startY + drag.sy0);
   drag.el.style.transform =
     `translate(calc(var(--dx,0px) + ${dx}px), ${dy}px) rotate(var(--rot,0deg)) scale(1.08)`;
+  setHot(pickZone(drag.el));
 }
 
 // kéo ảnh sát mép trên/dưới màn hình thì trang tự cuộn (ngón tay không thể vừa kéo vừa vuốt)
@@ -107,18 +162,22 @@ function autoScroll(){
   autoScrollRAF = requestAnimationFrame(autoScroll);
 }
 
-// chọn ô dây phơi chồng lên ảnh nhiều nhất (cần chồng ≥15% diện tích ảnh)
-function pickDropzone(el){
+// chọn ô dán: chồng lên ≥15% diện tích ảnh, hoặc thả gần ô (<90px) thì "nam châm" hút vào
+function pickZone(el){
   const r = el.getBoundingClientRect();
-  const need = r.width * r.height * 0.15;
-  let best = null, bestArea = 0;
-  document.querySelectorAll('.dropzone:not(.filled)').forEach(z => {
-    const zr = z.getBoundingClientRect();
-    const w = Math.min(r.right, zr.right) - Math.max(r.left, zr.left);
-    const h = Math.min(r.bottom, zr.bottom) - Math.max(r.top, zr.top);
+  const area = r.width * r.height;
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  let best = null, bestArea = 0, near = null, nearDist = 1e9;
+  document.querySelectorAll('.mem-slot:not(.filled)').forEach(z => {
+    const dz = z.querySelector('.mem-drop').getBoundingClientRect();
+    const w = Math.min(r.right, dz.right) - Math.max(r.left, dz.left);
+    const h = Math.min(r.bottom, dz.bottom) - Math.max(r.top, dz.top);
     if(w > 0 && h > 0 && w*h > bestArea){ best = z; bestArea = w*h; }
+    const d = Math.hypot(cx - (dz.left + dz.width / 2), cy - (dz.top + dz.height / 2));
+    if(d < nearDist){ near = z; nearDist = d; }
   });
-  return bestArea >= need ? best : null;
+  if(best && bestArea >= area * 0.15) return best;
+  return nearDist < 90 ? near : null;
 }
 
 polaroids.addEventListener('pointerdown', e => {
@@ -144,22 +203,46 @@ document.addEventListener('pointermove', e => {
   applyDrag();
 });
 
+// ghim ảnh vào ô: ảnh lướt từ chỗ vừa thả vào ô, kẹp bật xuống, ảnh đung đưa như treo trên dây
+function pin(el, zone){
+  const first = el.getBoundingClientRect();
+  zone.classList.add('filled');
+  el.classList.add('placed');
+  el.style.transition = '';
+  el.style.transform = '';
+  el.style.setProperty('--hang', ((Math.random() - .5) * 6).toFixed(1) + 'deg');   // mỗi ảnh nghiêng một chút
+  el.style.setProperty('--sd', (Math.random() * 1.6).toFixed(2) + 's');             // lắc lệch pha nhau
+  el.tabIndex = 0;
+  el.setAttribute('role', 'button');
+  el.setAttribute('aria-label', 'Phóng to ảnh');
+  zone.appendChild(el);
+  filled[zone.dataset.zone] = true;
+
+  if(!reduceMotion && el.animate){
+    const last = el.getBoundingClientRect();
+    const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+    const dy = first.top - last.top;
+    el.animate(
+      [{ translate: `${dx}px ${dy}px`, scale: `${first.width / last.width} ${first.height / last.height}` },
+       { translate: '0px 0px', scale: '1 1' }],
+      { duration: 340, easing: 'cubic-bezier(.3,1.2,.5,1)' });
+  }
+  zone.classList.add('snap');
+  setTimeout(() => zone.classList.remove('snap'), 420);
+  buzz(22);
+  if(Object.keys(filled).length === 4) finale();
+}
+
 function endDrag(e, allowDrop){
   if(!drag || e.pointerId !== drag.id) return;
   const el = drag.el;
-  const zone = allowDrop ? pickDropzone(el) : null;
+  const zone = allowDrop ? pickZone(el) : null;
   drag = null;
+  setHot(null);
   el.classList.remove('is-dragging');
 
   if(zone){
-    // thả đúng ô: dán vào ô (vị trí cố định do CSS .pol-mini.placed)
-    zone.classList.add('filled');
-    el.classList.add('placed');
-    el.style.transition = '';
-    el.style.transform = '';
-    zone.appendChild(el);
-    filled[zone.dataset.slot] = true;
-    if(Object.keys(filled).length === 4) confettiBurst();
+    pin(el, zone);
   } else {
     // thả ra ngoài: bay êm về chỗ cũ
     el.style.transition = 'transform .3s ease';
@@ -170,9 +253,50 @@ function endDrag(e, allowDrop){
 document.addEventListener('pointerup', e => endDrag(e, true));
 document.addEventListener('pointercancel', e => endDrag(e, false));
 
+// dán đủ 4 ảnh: dây đung đưa, bóng đèn sáng từng bóng, rồi mới bắn confetti
+function finale(){
+  memLine.classList.add('done');
+  memTip.classList.add('show');
+  setTimeout(() => { try{ confettiBurst(); }catch(_){} }, reduceMotion ? 0 : 1000);
+}
+
+// chạm vào ảnh đã ghim để phóng to
+const lb = document.createElement('div');
+lb.className = 'mem-lb';
+lb.setAttribute('role', 'dialog');
+lb.setAttribute('aria-modal', 'true');
+lb.setAttribute('aria-label', 'Ảnh phóng to');
+lb.innerHTML = '<button class="mem-lb-close" type="button" aria-label="Đóng">×</button><figure><img alt=""><figcaption></figcaption></figure>';
+document.body.appendChild(lb);
+function openLB(el){
+  const i = +el.dataset.photo;
+  const img = lb.querySelector('img');
+  img.src = boxPhotos[i];
+  img.alt = (el.querySelector('img') || {}).alt || '';
+  lb.querySelector('figcaption').textContent = CAPTIONS[i] || '';
+  lb.classList.add('open');
+  try{ lb.querySelector('.mem-lb-close').focus({ preventScroll:true }); }catch(_){}
+}
+function closeLB(){ lb.classList.remove('open'); }
+lb.addEventListener('click', closeLB);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLB(); });
+memLine.addEventListener('click', e => {
+  const el = e.target.closest('.pol-mini.placed');
+  if(el) openLB(el);
+});
+memLine.addEventListener('keydown', e => {
+  if((e.key === 'Enter' || e.key === ' ') && e.target.matches('.pol-mini.placed')){ e.preventDefault(); openLB(e.target); }
+});
+
+box.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); box.click(); } });
 box.onclick = () => {
   if (spawned) return;
   spawned = true;
+  box.classList.add('shake', 'open');                      // nắp bật mở
+  setTimeout(() => box.classList.remove('shake'), 400);
+  setTimeout(spawnPhotos, reduceMotion ? 0 : 260);          // ảnh đổ ra ngay sau khi nắp mở
+};
+function spawnPhotos(){
   for (let i = 0; i < 4; i++) {
     const d = document.createElement('div');
     d.className = 'pol-mini p' + i;
@@ -196,7 +320,7 @@ box.onclick = () => {
       d.classList.remove('falling');
     }, { once: true });
   }
-};
+}
 
 // ---------- music toggle (decorative) ----------
 const player=document.getElementById('player');
